@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aguije — Cafetería</title>
+  <link rel="preload" as="image" href="images/hero3.webp" type="image/webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   <style>
     /* ── Variables ── */
@@ -1372,19 +1373,31 @@
   <!-- Carousel fullscreen background -->
   <div class="carousel" id="heroCarousel">
     <div class="carousel-slide active">
-      <img src="images/hero3.jpg" alt="El equipo Aguije">
+      <picture>
+        <source srcset="images/hero3.webp" type="image/webp">
+        <img src="images/hero3.jpg" alt="El equipo Aguije" fetchpriority="high" decoding="async">
+      </picture>
       <div class="carousel-slide-overlay"></div>
     </div>
     <div class="carousel-slide">
-      <img src="images/hero1.jpg" alt="Barra Aguije">
+      <picture>
+        <source srcset="images/hero1.webp" type="image/webp">
+        <img src="images/hero1.jpg" alt="Barra Aguije" loading="lazy" decoding="async">
+      </picture>
       <div class="carousel-slide-overlay"></div>
     </div>
     <div class="carousel-slide">
-      <img src="images/hero2.jpg" alt="Mbeju Aguije">
+      <picture>
+        <source srcset="images/hero2.webp" type="image/webp">
+        <img src="images/hero2.jpg" alt="Mbeju Aguije" loading="lazy" decoding="async">
+      </picture>
       <div class="carousel-slide-overlay"></div>
     </div>
     <div class="carousel-slide">
-      <img src="images/foto7.jpg" alt="Brunch Aguije">
+      <picture>
+        <source srcset="images/foto7.webp" type="image/webp">
+        <img src="images/foto7.jpg" alt="Brunch Aguije" loading="lazy" decoding="async">
+      </picture>
       <div class="carousel-slide-overlay"></div>
     </div>
 
@@ -1427,7 +1440,10 @@
 <section id="nosotros">
   <div class="nosotros-inner">
     <div class="nosotros-left">
-      <img src="images/pasa-pues.jpg" alt="Pasa pues — Aguije" class="nosotros-img">
+      <picture>
+        <source srcset="images/pasa-pues.webp" type="image/webp">
+        <img src="images/pasa-pues.jpg" alt="Pasa pues — Aguije" class="nosotros-img" loading="lazy" decoding="async">
+      </picture>
     </div>
     <div class="nosotros-right">
       <div class="nosotros-badge">
@@ -1859,7 +1875,7 @@
           </div>
           <span class="ig-card-dots">···</span>
         </div>
-        <img src="images/hero3.jpg" alt="Equipo Aguije" class="ig-card-img">
+        <picture><source srcset="images/hero3.webp" type="image/webp"><img src="images/hero3.jpg" alt="Equipo Aguije" class="ig-card-img" loading="lazy" decoding="async"></picture>
         <div class="ig-card-actions">
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
@@ -1882,7 +1898,7 @@
           </div>
           <span class="ig-card-dots">···</span>
         </div>
-        <img src="images/hero1.jpg" alt="Barra Aguije" class="ig-card-img">
+        <picture><source srcset="images/hero1.webp" type="image/webp"><img src="images/hero1.jpg" alt="Barra Aguije" class="ig-card-img" loading="lazy" decoding="async"></picture>
         <div class="ig-card-actions">
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
@@ -1905,7 +1921,7 @@
           </div>
           <span class="ig-card-dots">···</span>
         </div>
-        <img src="images/hero2.jpg" alt="Mbeju Aguije" class="ig-card-img">
+        <picture><source srcset="images/hero2.webp" type="image/webp"><img src="images/hero2.jpg" alt="Mbeju Aguije" class="ig-card-img" loading="lazy" decoding="async"></picture>
         <div class="ig-card-actions">
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
@@ -1928,7 +1944,7 @@
           </div>
           <span class="ig-card-dots">···</span>
         </div>
-        <img src="images/foto4.jpg" alt="Cafetería Aguije" class="ig-card-img">
+        <picture><source srcset="images/foto4.webp" type="image/webp"><img src="images/foto4.jpg" alt="Cafetería Aguije" class="ig-card-img" loading="lazy" decoding="async"></picture>
         <div class="ig-card-actions">
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
@@ -1951,7 +1967,7 @@
           </div>
           <span class="ig-card-dots">···</span>
         </div>
-        <img src="images/foto3.jpg" alt="Iced Latte" class="ig-card-img">
+        <picture><source srcset="images/foto3.webp" type="image/webp"><img src="images/foto3.jpg" alt="Iced Latte" class="ig-card-img" loading="lazy" decoding="async"></picture>
         <div class="ig-card-actions">
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
@@ -1974,7 +1990,7 @@
           </div>
           <span class="ig-card-dots">···</span>
         </div>
-        <img src="images/foto7.jpg" alt="Brunch spread" class="ig-card-img">
+        <picture><source srcset="images/foto7.webp" type="image/webp"><img src="images/foto7.jpg" alt="Brunch spread" class="ig-card-img" loading="lazy" decoding="async"></picture>
         <div class="ig-card-actions">
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
           <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
