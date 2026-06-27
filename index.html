@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   <style>
     /* ── Variables ── */
     :root {
@@ -357,14 +358,18 @@
       border-radius: 20px;
       box-shadow: 0 20px 60px rgba(122,138,82,0.2);
     }
-    .nosotros-img-placeholder {
+    .nosotros-3d {
       width: 100%;
       aspect-ratio: 4/5;
-      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%);
       border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(122,138,82,0.2);
+      background: var(--crema-light);
+    }
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      --poster-color: transparent;
     }
     .nosotros-right { padding: 1rem 0; }
     .nosotros-text {
@@ -411,6 +416,36 @@
       font-size: 1.6rem;
       color: var(--marron);
       font-weight: 700;
+    }
+
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(122,138,82,0.12);
+      border-radius: 100px;
+      padding: 4px;
+      margin-top: 1.25rem;
+    }
+    .lang-btn {
+      padding: 0.55rem 1.5rem;
+      border: none;
+      background: transparent;
+      font-family: var(--ff-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--verde-dark);
+      opacity: 0.5;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lang-btn.active {
+      background: var(--verde);
+      color: var(--crema);
+      opacity: 1;
     }
 
     /* ── MENU ── */
@@ -917,6 +952,181 @@
     }
     .ig-card-comments:hover { color: #555; }
 
+    /* ── RESERVAS ── */
+    #reservas {
+      background: var(--verde);
+      padding: 5rem 2rem;
+    }
+    .reservas-inner {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .reservas-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .reservas-header .section-label { color: var(--crema); opacity: 0.7; }
+    .reservas-header .section-title { color: var(--crema); }
+    .reservas-header p {
+      color: var(--crema);
+      opacity: 0.75;
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+      font-family: var(--ff-script);
+      font-size: 1.2rem;
+    }
+    .reservas-form {
+      background: var(--crema-light);
+      border-radius: 24px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-family: var(--ff-body);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--verde-dark);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1.5px solid rgba(122,138,82,0.2);
+      border-radius: 10px;
+      background: #fff;
+      font-family: var(--ff-body);
+      font-size: 0.95rem;
+      color: var(--marron-dark);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--verde);
+      box-shadow: 0 0 0 3px rgba(122,138,82,0.12);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #bbb; }
+    .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A8A52' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-submit {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .form-note {
+      font-size: 0.8rem;
+      color: var(--marron);
+      opacity: 0.7;
+      line-height: 1.4;
+    }
+    .form-btn {
+      flex-shrink: 0;
+      padding: 0.9rem 2.5rem;
+      background: var(--verde);
+      color: var(--crema);
+      font-family: var(--ff-body);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .form-btn:hover {
+      background: var(--verde-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    /* Success state */
+    .reservas-success {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--crema-light);
+      border-radius: 24px;
+    }
+    .reservas-success.show { display: block; }
+    .reservas-form.hide { display: none; }
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--verde);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+    .success-icon svg { width: 30px; color: var(--crema); }
+    .success-title {
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      color: var(--verde-dark);
+      margin-bottom: 0.5rem;
+    }
+    .success-sub {
+      font-family: var(--ff-script);
+      font-size: 1.2rem;
+      color: var(--marron);
+    }
+    @media (max-width: 640px) {
+      .reservas-form { grid-template-columns: 1fr; padding: 1.5rem; }
+      .form-group.full { grid-column: auto; }
+      .form-submit { flex-direction: column; align-items: stretch; }
+      .form-btn { text-align: center; }
+    }
+
+    /* ── FLOATING BUTTONS ── */
+    .floating-btns {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .float-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+    }
+    .float-btn:hover {
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+    .float-btn svg { width: 24px; height: 24px; }
+    .float-ig {
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: #fff;
+    }
+    .float-wa { background: #25D366; color: #fff; }
+
     /* ── DONDE ENCONTRARNOS ── */
     #donde {
       background: var(--crema-light);
@@ -1138,6 +1348,7 @@
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#menu">El Menú</a></li>
     <li><a href="#galeria">Galería</a></li>
+    <li><a href="#reservas">Reservas</a></li>
     <li><a href="#donde">Ubicación</a></li>
   </ul>
   <button class="nav-burger" id="burgerBtn" aria-label="Abrir menú">
@@ -1151,6 +1362,7 @@
   <a href="#nosotros" class="mobile-link">Nosotros</a>
   <a href="#menu" class="mobile-link">El Menú</a>
   <a href="#galeria" class="mobile-link">Galería</a>
+  <a href="#reservas" class="mobile-link">Reservas</a>
   <a href="#donde" class="mobile-link">Ubicación</a>
 </div>
 
@@ -1215,7 +1427,7 @@
 <section id="nosotros">
   <div class="nosotros-inner">
     <div class="nosotros-left">
-      <img src="images/foto4.jpg" alt="Aguije — sabores con gratitud" class="nosotros-img">
+      <img src="images/pasa-pues.jpg" alt="Pasa pues — Aguije" class="nosotros-img">
     </div>
     <div class="nosotros-right">
       <div class="nosotros-badge">
@@ -1263,27 +1475,31 @@
   <div class="menu-header">
     <span class="section-label">lo que hacemos</span>
     <h2 class="section-title">el menú</h2>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
   </div>
 
   <div class="menu-tabs">
-    <button class="tab-btn active" data-tab="cafeteria">Cafetería</button>
-    <button class="tab-btn" data-tab="mostrador">Mostrador</button>
-    <button class="tab-btn" data-tab="cocina">Cocina</button>
-    <button class="tab-btn" data-tab="brunch">Brunch</button>
-    <button class="tab-btn" data-tab="after">After Office</button>
+    <button class="tab-btn active" data-tab="cafeteria" data-i18n="tab.cafeteria">Cafetería</button>
+    <button class="tab-btn" data-tab="mostrador" data-i18n="tab.mostrador">Mostrador</button>
+    <button class="tab-btn" data-tab="cocina" data-i18n="tab.cocina">Cocina</button>
+    <button class="tab-btn" data-tab="brunch" data-i18n="tab.brunch">Brunch</button>
+    <button class="tab-btn" data-tab="after" data-i18n="tab.after">After Office</button>
   </div>
 
   <!-- CAFETERÍA -->
   <div class="tab-content active" id="tab-cafeteria">
     <div class="menu-section">
       <div class="menu-section-header">
-        <h3 class="menu-section-title">Cafetería</h3>
+        <h3 class="menu-section-title" data-i18n="sec.cafeteria">Cafetería</h3>
         <div class="menu-section-line"></div>
       </div>
 
-      <div class="menu-subsection-label"><span>Calientes</span></div>
+      <div class="menu-subsection-label"><span data-i18n="sub.hot">Calientes</span></div>
       <div class="menu-items">
-        <div class="menu-item"><div class="item-left"><div class="item-name">Espresso <span class="badge-casa">doble</span></div></div><span class="item-price">18 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Espresso <span class="badge-casa" data-i18n="badge.double">doble</span></div></div><span class="item-price">18 MIL</span></div>
         <div class="menu-item"><div class="item-left"><div class="item-name">Americano</div></div><span class="item-price">20 MIL</span></div>
         <div class="menu-item"><div class="item-left"><div class="item-name">Latte</div></div><span class="item-price">25 MIL</span></div>
         <div class="menu-item"><div class="item-left"><div class="item-name">Flat White</div></div><span class="item-price">28 MIL</span></div>
@@ -1293,7 +1509,7 @@
         <div class="menu-item"><div class="item-left"><div class="item-name">Funky Flat</div></div><span class="item-price">30 MIL</span></div>
       </div>
 
-      <div class="menu-subsection-label" style="margin-top:2rem"><span>Fríos</span></div>
+      <div class="menu-subsection-label" style="margin-top:2rem"><span data-i18n="sub.cold">Fríos</span></div>
       <div class="menu-items">
         <div class="menu-item"><div class="item-left"><div class="item-name">Iced Latte</div></div><span class="item-price">30 MIL</span></div>
         <div class="menu-item"><div class="item-left"><div class="item-name">Iced Coffee</div></div><span class="item-price">25 MIL</span></div>
@@ -1304,36 +1520,36 @@
       </div>
 
       <div class="metodos-box" style="margin-top:2rem">
-        <h4>Métodos Filtrados</h4>
+        <h4 data-i18n="sec.filter">Métodos Filtrados</h4>
         <div class="metodos-grid">
           <div class="metodo-item">
             <h5>V60</h5>
             <p>1 taza — 25 MIL<br>2 tazas — 30 MIL</p>
           </div>
           <div class="metodo-item">
-            <h5>Prensa Francesa</h5>
+            <h5 data-i18n="item.french-press">Prensa Francesa</h5>
             <p>1 taza — 25 MIL<br>2 tazas — 30 MIL</p>
           </div>
         </div>
-        <p style="font-size:0.8rem; color:var(--marron); opacity:0.7; margin-top:0.75rem">Se pueden pedir fríos</p>
+        <p style="font-size:0.8rem; color:var(--marron); opacity:0.7; margin-top:0.75rem" data-i18n="note.cold-opt">Se pueden pedir fríos</p>
       </div>
     </div>
 
     <div class="menu-section">
       <div class="menu-section-header">
-        <h3 class="menu-section-title">Otras Bebidas</h3>
+        <h3 class="menu-section-title" data-i18n="sec.other-drinks">Otras Bebidas</h3>
         <div class="menu-section-line"></div>
       </div>
       <div class="menu-items">
-        <div class="menu-item"><div class="item-left"><div class="item-name">Jugo natural de Naranja</div></div><span class="item-price">15 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Jugo natural de Durazno</div></div><span class="item-price">18 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Jugo natural de Frutilla</div></div><span class="item-price">24 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.oj">Jugo natural de Naranja</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.peach-juice">Jugo natural de Durazno</div></div><span class="item-price">18 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.strawberry-juice">Jugo natural de Frutilla</div></div><span class="item-price">24 MIL</span></div>
         <div class="menu-item"><div class="item-left"><div class="item-name">Limonada</div></div><span class="item-price">15 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Té</div></div><span class="item-price">15 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Chocolate caliente / frío</div></div><span class="item-price">25 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Cocido Caliente</div></div><span class="item-price">20 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Agua con / sin gas</div></div><span class="item-price">15 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Gaseosas</div></div><span class="item-price">—</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.tea">Té</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.chocolate">Chocolate caliente / frío</div></div><span class="item-price">25 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.cocido">Cocido Caliente</div></div><span class="item-price">20 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.water">Agua con / sin gas</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.sodas">Gaseosas</div></div><span class="item-price">—</span></div>
       </div>
     </div>
   </div>
@@ -1342,61 +1558,61 @@
   <div class="tab-content" id="tab-mostrador">
     <div class="menu-section">
       <div class="menu-section-header">
-        <h3 class="menu-section-title">Panadería</h3>
+        <h3 class="menu-section-title" data-i18n="sec.bakery">Panadería</h3>
         <div class="menu-section-line"></div>
       </div>
       <div class="menu-items">
-        <div class="menu-item"><div class="item-left"><div class="item-name">Medialuna sin relleno</div></div><span class="item-price">10 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Medialuna con relleno</div></div><span class="item-price">15 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Danesa de Pastelera</div></div><span class="item-price">20 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Danesa con Frutas de Estación</div></div><span class="item-price">30 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Roll de Canela</div></div><span class="item-price">16 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.medialuna-plain">Medialuna sin relleno</div></div><span class="item-price">10 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.medialuna-filled">Medialuna con relleno</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.danish-cream">Danesa de Pastelera</div></div><span class="item-price">20 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.danish-fruit">Danesa con Frutas de Estación</div></div><span class="item-price">30 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.cinnamon-roll">Roll de Canela</div></div><span class="item-price">16 MIL</span></div>
         <div class="menu-item"><div class="item-left"><div class="item-name">Croissant</div></div><span class="item-price">15 MIL</span></div>
         <div class="menu-item"><div class="item-left"><div class="item-name">Croissant de JYQ</div></div><span class="item-price">23 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Pepa de Chipa <span class="badge-casa">de la casa</span></div></div><span class="item-price">25 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Mbeju Tradicional <span class="badge-casa">de la casa</span></div></div><span class="item-price">20 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Bombita de Queso <span class="badge-casa">de la casa</span></div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.pepa-chipa">Pepa de Chipa <span class="badge-casa">de la casa</span></div></div><span class="item-price">25 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.mbeju-trad">Mbeju Tradicional <span class="badge-casa">de la casa</span></div></div><span class="item-price">20 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.bombita">Bombita de Queso <span class="badge-casa">de la casa</span></div></div><span class="item-price">15 MIL</span></div>
       </div>
     </div>
 
     <div class="menu-section">
       <div class="menu-section-header">
-        <h3 class="menu-section-title">Pastelería</h3>
+        <h3 class="menu-section-title" data-i18n="sec.pastry">Pastelería</h3>
         <div class="menu-section-line"></div>
       </div>
       <div class="menu-items">
-        <div class="menu-item"><div class="item-left"><div class="item-name">Cookie Clásica</div></div><span class="item-price">15 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Cookie de Pistacho y Frambuesa</div></div><span class="item-price">27 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Cookie de Café y Caramelo Salado</div></div><span class="item-price">20 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Cake de Coco <span class="badge-casa">de la casa</span></div></div><span class="item-price">27 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.cookie-classic">Cookie Clásica</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.cookie-pistacho">Cookie de Pistacho y Frambuesa</div></div><span class="item-price">27 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.cookie-cafe">Cookie de Café y Caramelo Salado</div></div><span class="item-price">20 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.cake-coco">Cake de Coco <span class="badge-casa">de la casa</span></div></div><span class="item-price">27 MIL</span></div>
         <div class="menu-item"><div class="item-left"><div class="item-name">Carrot Cake</div></div><span class="item-price">35 MIL</span></div>
       </div>
     </div>
 
     <div class="menu-section">
       <div class="menu-section-header">
-        <h3 class="menu-section-title">Especiales de la Casa</h3>
+        <h3 class="menu-section-title" data-i18n="sec.specials">Especiales de la Casa</h3>
         <div class="menu-section-line"></div>
       </div>
       <div class="menu-items">
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Mbeju Aguije <span class="badge-casa">especial</span></div>
-            <div class="item-desc">Base de mbeju, crema de queso azul, mix de verdes, jamón crudo, reducción balsámica, rabanito encurtido</div>
+            <div class="item-name" data-i18n="item.mbeju-aguije">Mbeju Aguije <span class="badge-casa">especial</span></div>
+            <div class="item-desc" data-i18n="desc.mbeju-aguije">Base de mbeju, crema de queso azul, mix de verdes, jamón crudo, reducción balsámica, rabanito encurtido</div>
           </div>
           <span class="item-price">48 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Mbeju Caprese <span class="badge-casa">especial</span></div>
-            <div class="item-desc">Base de mbeju, crema de queso mozzarella fresco, pesto, mix de verdes, tomate cherry confit</div>
+            <div class="item-name" data-i18n="item.mbeju-caprese">Mbeju Caprese <span class="badge-casa">especial</span></div>
+            <div class="item-desc" data-i18n="desc.mbeju-caprese">Base de mbeju, crema de queso mozzarella fresco, pesto, mix de verdes, tomate cherry confit</div>
           </div>
           <span class="item-price">26 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Bagel de Chipa <span class="badge-casa">especial</span></div>
-            <div class="item-desc">Masa de chipa de la casa, queso crema, jamón crudo, rúcula y tomate</div>
+            <div class="item-name" data-i18n="item.bagel-chipa">Bagel de Chipa <span class="badge-casa">especial</span></div>
+            <div class="item-desc" data-i18n="desc.bagel-chipa">Masa de chipa de la casa, queso crema, jamón crudo, rúcula y tomate</div>
           </div>
           <span class="item-price">25 MIL</span>
         </div>
@@ -1405,22 +1621,22 @@
 
     <div class="menu-section">
       <div class="menu-section-header">
-        <h3 class="menu-section-title">Postres al Momento</h3>
+        <h3 class="menu-section-title" data-i18n="sec.desserts">Postres al Momento</h3>
         <div class="menu-section-line"></div>
       </div>
       <div class="menu-items">
         <div class="menu-item"><div class="item-left"><div class="item-name">French Toast</div></div><span class="item-price">32 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Torta Húmeda de Chocolate <span class="badge-casa">de la casa</span></div></div><span class="item-price">37 MIL</span></div>
-        <div class="menu-item"><div class="item-left"><div class="item-name">Yogurt Griego con Frutas</div></div><span class="item-price">35 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.torta-choco">Torta Húmeda de Chocolate <span class="badge-casa">de la casa</span></div></div><span class="item-price">37 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.yogurt">Yogurt Griego con Frutas</div></div><span class="item-price">35 MIL</span></div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Helados de la Casa <span class="badge-casa">artesanal</span></div>
-            <div class="item-desc">Lo elaboramos artesanalmente en Aguije. Consultá los sabores disponibles.</div>
+            <div class="item-name" data-i18n="item.ice-cream">Helados de la Casa <span class="badge-casa">artesanal</span></div>
+            <div class="item-desc" data-i18n="desc.ice-cream">Lo elaboramos artesanalmente en Aguije. Consultá los sabores disponibles.</div>
           </div>
           <span class="item-price">12 MIL</span>
         </div>
       </div>
-      <p style="font-size:0.85rem; color:var(--verde-dark); margin-top:1rem; font-weight:600">¡Podés agregar helado a cualquier postre!</p>
+      <p style="font-size:0.85rem; color:var(--verde-dark); margin-top:1rem; font-weight:600" data-i18n="note.ice-cream-add">¡Podés agregar helado a cualquier postre!</p>
     </div>
   </div>
 
@@ -1428,50 +1644,50 @@
   <div class="tab-content" id="tab-cocina">
     <div class="menu-section">
       <div class="menu-section-header">
-        <h3 class="menu-section-title">Sándwiches</h3>
+        <h3 class="menu-section-title" data-i18n="sec.sandwiches">Sándwiches</h3>
         <div class="menu-section-line"></div>
       </div>
-      <p style="font-size:0.8rem; color:var(--marron); opacity:0.7; margin-bottom:1.5rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase">Todos salen con papas</p>
+      <p style="font-size:0.8rem; color:var(--marron); opacity:0.7; margin-bottom:1.5rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase" data-i18n="note.with-fries">Todos salen con papas</p>
       <div class="menu-items">
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Grill Chesse</div>
-            <div class="item-desc">Pan de Campo, Queso Fontina, Queso Cheddar, Mozzarella. Con mermelada de tomate de la casa</div>
+            <div class="item-name" data-i18n="item.grill-chesse">Grill Chesse</div>
+            <div class="item-desc" data-i18n="desc.grill-chesse">Pan de Campo, Queso Fontina, Queso Cheddar, Mozzarella. Con mermelada de tomate de la casa</div>
           </div>
           <span class="item-price">40 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">De Atún</div>
-            <div class="item-desc">Pan Lactal, atún, mayonesa, pepinillo, cebolla morada, queso cheddar, ciboulette</div>
+            <div class="item-name" data-i18n="item.atun">De Atún</div>
+            <div class="item-desc" data-i18n="desc.atun">Pan Lactal, atún, mayonesa, pepinillo, cebolla morada, queso cheddar, ciboulette</div>
           </div>
           <span class="item-price">47 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Pollo Crispy</div>
-            <div class="item-desc">Pan Brioche, mayo Tasty, pollo crispy, pepino encurtido, lechuga repollada</div>
+            <div class="item-name" data-i18n="item.pollo-crispy">Pollo Crispy</div>
+            <div class="item-desc" data-i18n="desc.pollo-crispy">Pan Brioche, mayo Tasty, pollo crispy, pepino encurtido, lechuga repollada</div>
           </div>
           <span class="item-price">42 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Cheese Burger</div>
-            <div class="item-desc">Pan francés, mayo tasty, blend de la casa, queso, bacon spicy</div>
+            <div class="item-name" data-i18n="item.cheese-burger">Cheese Burger</div>
+            <div class="item-desc" data-i18n="desc.cheese-burger">Pan francés, mayo tasty, blend de la casa, queso, bacon spicy</div>
           </div>
           <span class="item-price">40 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Club Sándwich Aguije <span class="badge-nuevo">nuevo</span></div>
-            <div class="item-desc">Pan lactal, mayo de la casa, pollo marinado, mix de verdes, jamón y queso, panceta, huevo</div>
+            <div class="item-name" data-i18n="item.club-sandwich">Club Sándwich Aguije <span class="badge-nuevo">nuevo</span></div>
+            <div class="item-desc" data-i18n="desc.club-sandwich">Pan lactal, mayo de la casa, pollo marinado, mix de verdes, jamón y queso, panceta, huevo</div>
           </div>
           <span class="item-price">45 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Focaccia Mortadela</div>
-            <div class="item-desc">Mortadela, crema de mozza fresca, pesto, rúcula, tomate cherry confit</div>
+            <div class="item-name" data-i18n="item.focaccia">Focaccia Mortadela</div>
+            <div class="item-desc" data-i18n="desc.focaccia">Mortadela, crema de mozza fresca, pesto, rúcula, tomate cherry confit</div>
           </div>
           <span class="item-price">42 MIL</span>
         </div>
@@ -1480,35 +1696,35 @@
 
     <div class="menu-section">
       <div class="menu-section-header">
-        <h3 class="menu-section-title">Tostadas</h3>
+        <h3 class="menu-section-title" data-i18n="sec.toasts">Tostadas</h3>
         <div class="menu-section-line"></div>
       </div>
       <div class="menu-items">
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Capresse</div>
-            <div class="item-desc">Pan de campo, pesto, mozzarella, tomate confitado, albahaca</div>
+            <div class="item-name" data-i18n="item.capresse-toast">Capresse</div>
+            <div class="item-desc" data-i18n="desc.capresse-toast">Pan de campo, pesto, mozzarella, tomate confitado, albahaca</div>
           </div>
           <span class="item-price">36 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Hummus & Huevo</div>
-            <div class="item-desc">Hummus, palta, huevo a la plancha</div>
+            <div class="item-name" data-i18n="item.hummus-huevo">Hummus & Huevo</div>
+            <div class="item-desc" data-i18n="desc.hummus-huevo">Hummus, palta, huevo a la plancha</div>
           </div>
           <span class="item-price">32 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Langostinos</div>
-            <div class="item-desc">Guacamole, langostinos sellados, cilantro</div>
+            <div class="item-name" data-i18n="item.langostinos">Langostinos</div>
+            <div class="item-desc" data-i18n="desc.langostinos">Guacamole, langostinos sellados, cilantro</div>
           </div>
           <span class="item-price">39 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
             <div class="item-name">Aguije</div>
-            <div class="item-desc">Ricota especiada, palta, huevo</div>
+            <div class="item-desc" data-i18n="desc.aguije-toast">Ricota especiada, palta, huevo</div>
           </div>
           <span class="item-price">25 MIL</span>
         </div>
@@ -1518,44 +1734,44 @@
 
   <!-- BRUNCH -->
   <div class="tab-content" id="tab-brunch">
-    <div class="brunch-note">
+    <div class="brunch-note" data-i18n="note.brunch-hours">
       <span>Brunch</span> · Sábados y Domingos de 9 a 15 hs
     </div>
     <div class="combos-grid" style="margin-top:2rem">
       <div class="combo-card">
         <span class="combo-num">1</span>
         <div class="combo-name">Combo 1</div>
-        <div class="combo-subtitle">El despertar suave</div>
+        <div class="combo-subtitle" data-i18n="combo1.subtitle">El despertar suave</div>
         <ul class="combo-items">
-          <li>Café a elección (Latte, Flat White, Americano, Espresso)</li>
-          <li>Huevos revueltos</li>
-          <li>Jugo de Naranja</li>
-          <li>Panera + Mermelada + Queso Crema</li>
+          <li data-i18n="combo1.item1">Café a elección (Latte, Flat White, Americano, Espresso)</li>
+          <li data-i18n="combo1.item2">Huevos revueltos</li>
+          <li data-i18n="combo1.item3">Jugo de Naranja</li>
+          <li data-i18n="combo1.item4">Panera + Mermelada + Queso Crema</li>
         </ul>
         <div class="combo-price">65 MIL</div>
       </div>
       <div class="combo-card">
         <span class="combo-num">2</span>
         <div class="combo-name">Combo 2</div>
-        <div class="combo-subtitle">El mimo completo</div>
+        <div class="combo-subtitle" data-i18n="combo2.subtitle">El mimo completo</div>
         <ul class="combo-items">
-          <li>Café a elección (Americano, Latte, Flat White, Espresso)</li>
-          <li>Huevos revueltos + Panceta</li>
-          <li>Jugo de Naranja</li>
-          <li>Postre a elección (Budín de Croissant o Cookie de Café y Caramelo Salado)</li>
-          <li>Panera + Bombitas de queso + Mermelada + Queso Crema</li>
+          <li data-i18n="combo2.item1">Café a elección (Americano, Latte, Flat White, Espresso)</li>
+          <li data-i18n="combo2.item2">Huevos revueltos + Panceta</li>
+          <li data-i18n="combo2.item3">Jugo de Naranja</li>
+          <li data-i18n="combo2.item4">Postre a elección (Budín de Croissant o Cookie de Café y Caramelo Salado)</li>
+          <li data-i18n="combo2.item5">Panera + Bombitas de queso + Mermelada + Queso Crema</li>
         </ul>
         <div class="combo-price">85 MIL</div>
       </div>
       <div class="combo-card" style="background: linear-gradient(135deg, #ecd9b5, #f5d4a5)">
         <span class="combo-num">3</span>
         <div class="combo-name">Combo 3</div>
-        <div class="combo-subtitle">Para compartir y disfrutar</div>
+        <div class="combo-subtitle" data-i18n="combo3.subtitle">Para compartir y disfrutar</div>
         <ul class="combo-items">
-          <li>2 Cafés a elección + Mbeju o Bombitas de Queso</li>
-          <li>2 Huevos revueltos + Panceta + Palta</li>
-          <li>2 Jugos de Naranja</li>
-          <li>2 Postres (Budín de Pan + Cookie de Café y Caramelo Salado)</li>
+          <li data-i18n="combo3.item1">2 Cafés a elección + Mbeju o Bombitas de Queso</li>
+          <li data-i18n="combo3.item2">2 Huevos revueltos + Panceta + Palta</li>
+          <li data-i18n="combo3.item3">2 Jugos de Naranja</li>
+          <li data-i18n="combo3.item4">2 Postres (Budín de Pan + Cookie de Café y Caramelo Salado)</li>
         </ul>
         <div class="combo-price">130 MIL</div>
       </div>
@@ -1565,8 +1781,8 @@
   <!-- AFTER OFFICE -->
   <div class="tab-content" id="tab-after">
     <div class="after-header-strip">
-      <h3>Barra Aguije</h3>
-      <span>Jueves a Domingos · Desde las 18:30 hs</span>
+      <h3 data-i18n="after.bar-title">Barra Aguije</h3>
+      <span data-i18n="after.hours">Jueves a Domingos · Desde las 18:30 hs</span>
     </div>
 
     <div class="menu-items">
@@ -1577,31 +1793,31 @@
       <div class="menu-item"><div class="item-left"><div class="item-name">Smirnoff Ice</div></div><span class="item-price">20 MIL</span></div>
       <div class="menu-item"><div class="item-left"><div class="item-name">Fernet con Coca</div></div><span class="item-price">25 MIL</span></div>
       <div class="menu-item"><div class="item-left"><div class="item-name">Gin Tonic</div></div><span class="item-price">25 MIL</span></div>
-      <div class="menu-item"><div class="item-left"><div class="item-name">Vermut</div></div><span class="item-price">25 MIL</span></div>
+      <div class="menu-item"><div class="item-left"><div class="item-name" data-i18n="item.vermut">Vermut</div></div><span class="item-price">25 MIL</span></div>
     </div>
 
     <div class="picada-box">
-      <div class="picada-title">Picada Aguije</div>
+      <div class="picada-title" data-i18n="picada.title">Picada Aguije</div>
       <div class="menu-items">
         <div class="menu-item">
-          <div class="item-left"><div class="item-name">Dip de Hummus + Crudités + Pan del Día</div></div>
+          <div class="item-left"><div class="item-name" data-i18n="item.hummus-dip">Dip de Hummus + Crudités + Pan del Día</div></div>
           <span class="item-price">25 MIL</span>
         </div>
         <div class="menu-item">
-          <div class="item-left"><div class="item-name">Bombitas de Papa + Alioli de Eneldo</div></div>
+          <div class="item-left"><div class="item-name" data-i18n="item.bombitas-papa">Bombitas de Papa + Alioli de Eneldo</div></div>
           <span class="item-price">30 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Trío de Empanaditas</div>
-            <div class="item-desc">Carne, Jamón y Queso, Chipaguazú</div>
+            <div class="item-name" data-i18n="item.empanaditas">Trío de Empanaditas</div>
+            <div class="item-desc" data-i18n="desc.empanaditas">Carne, Jamón y Queso, Chipaguazú</div>
           </div>
           <span class="item-price">28 MIL</span>
         </div>
         <div class="menu-item">
           <div class="item-left">
-            <div class="item-name">Papas Fritas au Beurre</div>
-            <div class="item-desc">Parmesano + Limón + Lalioli</div>
+            <div class="item-name" data-i18n="item.papas-beurre">Papas Fritas au Beurre</div>
+            <div class="item-desc" data-i18n="desc.papas-beurre">Parmesano + Limón + Lalioli</div>
           </div>
           <span class="item-price">25 MIL</span>
         </div>
@@ -1780,6 +1996,89 @@
 <!-- ── WAVE ── -->
 <div class="wave" style="background: #fafafa;">
   <svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60">
+    <path d="M0,20 C360,60 720,0 1440,40 L1440,60 L0,60 Z" fill="#7A8A52"/>
+  </svg>
+</div>
+
+<!-- ── RESERVAS ── -->
+<section id="reservas">
+  <div class="reservas-inner">
+    <div class="reservas-header">
+      <span class="section-label">¿venís?</span>
+      <h2 class="section-title">hacé tu reserva</h2>
+      <p>Contanos cuándo pasás y te esperamos con todo listo</p>
+    </div>
+
+    <form class="reservas-form" id="reservasForm">
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" placeholder="Tu nombre" required>
+      </div>
+      <div class="form-group">
+        <label>Teléfono / Email</label>
+        <input type="text" placeholder="+595 9xx xxx xxx" required>
+      </div>
+      <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" required>
+      </div>
+      <div class="form-group">
+        <label>Hora</label>
+        <select required>
+          <option value="" disabled selected>Elegí un horario</option>
+          <optgroup label="Mañana / Almuerzo">
+            <option>08:00</option><option>08:30</option><option>09:00</option>
+            <option>09:30</option><option>10:00</option><option>10:30</option>
+            <option>11:00</option><option>11:30</option><option>12:00</option>
+            <option>12:30</option><option>13:00</option><option>13:30</option>
+            <option>14:00</option><option>14:30</option>
+          </optgroup>
+          <optgroup label="After Office">
+            <option>18:30</option><option>19:00</option><option>19:30</option>
+            <option>20:00</option><option>20:30</option><option>21:00</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Personas</label>
+        <select required>
+          <option value="" disabled selected>¿Cuántos son?</option>
+          <option>1 persona</option><option>2 personas</option><option>3 personas</option>
+          <option>4 personas</option><option>5 personas</option><option>6 personas</option>
+          <option>7 o más</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Ocasión</label>
+        <select>
+          <option value="" disabled selected>Tipo de visita</option>
+          <option>Desayuno / Café</option><option>Brunch</option><option>After Office</option>
+          <option>Cumpleaños</option><option>Reunión de trabajo</option><option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Comentarios o pedidos especiales</label>
+        <textarea placeholder="Alergias, celebraciones, preferencias de mesa..."></textarea>
+      </div>
+      <div class="form-submit">
+        <p class="form-note">Te vamos a confirmar la reserva por WhatsApp o email a la brevedad.</p>
+        <button type="submit" class="form-btn">Reservar mesa</button>
+      </div>
+    </form>
+
+    <div class="reservas-success" id="reservasSuccess">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="success-title">¡Reserva enviada!</div>
+      <div class="success-sub">Te confirmamos a la brevedad. ¡Aguije te espera!</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WAVE ── -->
+<div class="wave" style="background: var(--verde);">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60">
     <path d="M0,40 C360,0 720,60 1080,20 C1260,5 1380,50 1440,30 L1440,60 L0,60 Z" fill="#FDF0D8"/>
   </svg>
 </div>
@@ -1790,31 +2089,24 @@
     <div class="donde-info">
       <span class="section-label">vení a vernos</span>
       <h2 class="section-title">dónde<br>encontrarnos</h2>
-
       <div class="donde-detail">
         <div class="donde-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         </div>
         <div class="donde-detail-text">
           <h4>Dirección</h4>
-          <a href="https://maps.app.goo.gl/GfWE3yTym6sFru3EA" target="_blank" rel="noopener">
-            Asunción, Paraguay<br>Ver en Google Maps →
-          </a>
+          <a href="https://maps.app.goo.gl/GfWE3yTym6sFru3EA" target="_blank" rel="noopener">Asunción, Paraguay<br>Ver en Google Maps →</a>
         </div>
       </div>
-
       <div class="donde-detail">
         <div class="donde-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <div class="donde-detail-text">
           <h4>Horarios</h4>
-          <p>Lunes a Viernes — desde las 8:00 hs<br>
-          Sábados y Domingos — Brunch 9 a 15 hs<br>
-          After Office — Jue a Dom desde 18:30 hs</p>
+          <p>Lunes a Viernes — desde las 8:00 hs<br>Sábados y Domingos — Brunch 9 a 15 hs<br>After Office — Jue a Dom desde 18:30 hs</p>
         </div>
       </div>
-
       <div class="donde-detail">
         <div class="donde-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -1825,15 +2117,8 @@
         </div>
       </div>
     </div>
-
     <div class="donde-map">
-      <iframe
-        src="https://maps.google.com/maps?q=aguije+cafe+asuncion+paraguay&output=embed&z=16"
-        allowfullscreen
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Ubicación Aguije Cafetería">
-      </iframe>
+      <iframe src="https://maps.google.com/maps?q=aguije+cafe+asuncion+paraguay&output=embed&z=16" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación Aguije Cafetería"></iframe>
     </div>
   </div>
 </section>
@@ -1843,6 +2128,16 @@
   <svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60">
     <path d="M0,30 C360,60 720,0 1080,40 C1260,55 1380,20 1440,30 L1440,60 L0,60 Z" fill="#3D2010"/>
   </svg>
+</div>
+
+<!-- ── FLOATING BUTTONS ── -->
+<div class="floating-btns">
+  <a href="https://www.instagram.com/aguije.py/" target="_blank" rel="noopener" class="float-btn float-ig" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg>
+  </a>
+  <a href="https://wa.me/595900000000" target="_blank" rel="noopener" class="float-btn float-wa" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
 </div>
 
 <!-- ── FOOTER ── -->
@@ -1908,6 +2203,18 @@
   document.querySelectorAll('.mobile-link').forEach(link => {
     link.addEventListener('click', () => mobileMenu.classList.remove('open'));
   });
+
+  // ── Reservas form ──
+  (function () {
+    const form = document.getElementById('reservasForm');
+    const success = document.getElementById('reservasSuccess');
+    if (!form) return;
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      form.classList.add('hide');
+      success.classList.add('show');
+    });
+  })();
 
   // ── Instagram infinite loop: duplicate cards ──
   (function () {
@@ -1987,6 +2294,182 @@
     startAuto();
     resetProgress();
   })();
+
+  // ── Language Toggle ──
+  const translations = {
+    es: {
+      'tab.cafeteria': 'Cafetería', 'tab.mostrador': 'Mostrador', 'tab.cocina': 'Cocina',
+      'tab.brunch': 'Brunch', 'tab.after': 'After Office',
+      'sec.cafeteria': 'Cafetería', 'sub.hot': 'Calientes', 'sub.cold': 'Fríos',
+      'badge.double': 'doble',
+      'sec.filter': 'Métodos Filtrados', 'item.french-press': 'Prensa Francesa',
+      'note.cold-opt': 'Se pueden pedir fríos',
+      'sec.other-drinks': 'Otras Bebidas',
+      'item.oj': 'Jugo natural de Naranja', 'item.peach-juice': 'Jugo natural de Durazno',
+      'item.strawberry-juice': 'Jugo natural de Frutilla', 'item.tea': 'Té',
+      'item.chocolate': 'Chocolate caliente / frío', 'item.cocido': 'Cocido Caliente',
+      'item.water': 'Agua con / sin gas', 'item.sodas': 'Gaseosas',
+      'sec.bakery': 'Panadería',
+      'item.medialuna-plain': 'Medialuna sin relleno', 'item.medialuna-filled': 'Medialuna con relleno',
+      'item.danish-cream': 'Danesa de Pastelera', 'item.danish-fruit': 'Danesa con Frutas de Estación',
+      'item.cinnamon-roll': 'Roll de Canela',
+      'item.pepa-chipa': 'Pepa de Chipa <span class="badge-casa">de la casa</span>',
+      'item.mbeju-trad': 'Mbeju Tradicional <span class="badge-casa">de la casa</span>',
+      'item.bombita': 'Bombita de Queso <span class="badge-casa">de la casa</span>',
+      'sec.pastry': 'Pastelería',
+      'item.cookie-classic': 'Cookie Clásica', 'item.cookie-pistacho': 'Cookie de Pistacho y Frambuesa',
+      'item.cookie-cafe': 'Cookie de Café y Caramelo Salado',
+      'item.cake-coco': 'Cake de Coco <span class="badge-casa">de la casa</span>',
+      'sec.specials': 'Especiales de la Casa',
+      'item.mbeju-aguije': 'Mbeju Aguije <span class="badge-casa">especial</span>',
+      'desc.mbeju-aguije': 'Base de mbeju, crema de queso azul, mix de verdes, jamón crudo, reducción balsámica, rabanito encurtido',
+      'item.mbeju-caprese': 'Mbeju Caprese <span class="badge-casa">especial</span>',
+      'desc.mbeju-caprese': 'Base de mbeju, crema de queso mozzarella fresco, pesto, mix de verdes, tomate cherry confit',
+      'item.bagel-chipa': 'Bagel de Chipa <span class="badge-casa">especial</span>',
+      'desc.bagel-chipa': 'Masa de chipa de la casa, queso crema, jamón crudo, rúcula y tomate',
+      'sec.desserts': 'Postres al Momento',
+      'item.torta-choco': 'Torta Húmeda de Chocolate <span class="badge-casa">de la casa</span>',
+      'item.yogurt': 'Yogurt Griego con Frutas',
+      'item.ice-cream': 'Helados de la Casa <span class="badge-casa">artesanal</span>',
+      'desc.ice-cream': 'Lo elaboramos artesanalmente en Aguije. Consultá los sabores disponibles.',
+      'note.ice-cream-add': '¡Podés agregar helado a cualquier postre!',
+      'sec.sandwiches': 'Sándwiches', 'note.with-fries': 'Todos salen con papas',
+      'item.grill-chesse': 'Grill Chesse',
+      'desc.grill-chesse': 'Pan de Campo, Queso Fontina, Queso Cheddar, Mozzarella. Con mermelada de tomate de la casa',
+      'item.atun': 'De Atún',
+      'desc.atun': 'Pan Lactal, atún, mayonesa, pepinillo, cebolla morada, queso cheddar, ciboulette',
+      'item.pollo-crispy': 'Pollo Crispy',
+      'desc.pollo-crispy': 'Pan Brioche, mayo Tasty, pollo crispy, pepino encurtido, lechuga repollada',
+      'item.cheese-burger': 'Cheese Burger',
+      'desc.cheese-burger': 'Pan francés, mayo tasty, blend de la casa, queso, bacon spicy',
+      'item.club-sandwich': 'Club Sándwich Aguije <span class="badge-nuevo">nuevo</span>',
+      'desc.club-sandwich': 'Pan lactal, mayo de la casa, pollo marinado, mix de verdes, jamón y queso, panceta, huevo',
+      'item.focaccia': 'Focaccia Mortadela',
+      'desc.focaccia': 'Mortadela, crema de mozza fresca, pesto, rúcula, tomate cherry confit',
+      'sec.toasts': 'Tostadas',
+      'item.capresse-toast': 'Capresse',
+      'desc.capresse-toast': 'Pan de campo, pesto, mozzarella, tomate confitado, albahaca',
+      'item.hummus-huevo': 'Hummus & Huevo', 'desc.hummus-huevo': 'Hummus, palta, huevo a la plancha',
+      'item.langostinos': 'Langostinos', 'desc.langostinos': 'Guacamole, langostinos sellados, cilantro',
+      'desc.aguije-toast': 'Ricota especiada, palta, huevo',
+      'note.brunch-hours': '<span>Brunch</span> · Sábados y Domingos de 9 a 15 hs',
+      'combo1.subtitle': 'El despertar suave',
+      'combo1.item1': 'Café a elección (Latte, Flat White, Americano, Espresso)',
+      'combo1.item2': 'Huevos revueltos', 'combo1.item3': 'Jugo de Naranja',
+      'combo1.item4': 'Panera + Mermelada + Queso Crema',
+      'combo2.subtitle': 'El mimo completo',
+      'combo2.item1': 'Café a elección (Americano, Latte, Flat White, Espresso)',
+      'combo2.item2': 'Huevos revueltos + Panceta', 'combo2.item3': 'Jugo de Naranja',
+      'combo2.item4': 'Postre a elección (Budín de Croissant o Cookie de Café y Caramelo Salado)',
+      'combo2.item5': 'Panera + Bombitas de queso + Mermelada + Queso Crema',
+      'combo3.subtitle': 'Para compartir y disfrutar',
+      'combo3.item1': '2 Cafés a elección + Mbeju o Bombitas de Queso',
+      'combo3.item2': '2 Huevos revueltos + Panceta + Palta',
+      'combo3.item3': '2 Jugos de Naranja',
+      'combo3.item4': '2 Postres (Budín de Pan + Cookie de Café y Caramelo Salado)',
+      'after.bar-title': 'Barra Aguije', 'after.hours': 'Jueves a Domingos · Desde las 18:30 hs',
+      'item.vermut': 'Vermut', 'picada.title': 'Picada Aguije',
+      'item.hummus-dip': 'Dip de Hummus + Crudités + Pan del Día',
+      'item.bombitas-papa': 'Bombitas de Papa + Alioli de Eneldo',
+      'item.empanaditas': 'Trío de Empanaditas', 'desc.empanaditas': 'Carne, Jamón y Queso, Chipaguazú',
+      'item.papas-beurre': 'Papas Fritas au Beurre', 'desc.papas-beurre': 'Parmesano + Limón + Lalioli',
+    },
+    en: {
+      'tab.cafeteria': 'Coffee', 'tab.mostrador': 'Counter', 'tab.cocina': 'Kitchen',
+      'tab.brunch': 'Brunch', 'tab.after': 'After Office',
+      'sec.cafeteria': 'Coffee Bar', 'sub.hot': 'Hot', 'sub.cold': 'Cold',
+      'badge.double': 'double',
+      'sec.filter': 'Filter Methods', 'item.french-press': 'French Press',
+      'note.cold-opt': 'Can be ordered iced',
+      'sec.other-drinks': 'Other Drinks',
+      'item.oj': 'Fresh Orange Juice', 'item.peach-juice': 'Fresh Peach Juice',
+      'item.strawberry-juice': 'Fresh Strawberry Juice', 'item.tea': 'Tea',
+      'item.chocolate': 'Hot / Iced Chocolate', 'item.cocido': 'Yerba Mate Tea',
+      'item.water': 'Still / Sparkling Water', 'item.sodas': 'Soft Drinks',
+      'sec.bakery': 'Bakery',
+      'item.medialuna-plain': 'Plain Croissant', 'item.medialuna-filled': 'Filled Croissant',
+      'item.danish-cream': 'Cream Danish', 'item.danish-fruit': 'Seasonal Fruit Danish',
+      'item.cinnamon-roll': 'Cinnamon Roll',
+      'item.pepa-chipa': 'Chipa Pepa <span class="badge-casa">house made</span>',
+      'item.mbeju-trad': 'Traditional Mbeju <span class="badge-casa">house made</span>',
+      'item.bombita': 'Cheese Puffs <span class="badge-casa">house made</span>',
+      'sec.pastry': 'Pastry',
+      'item.cookie-classic': 'Classic Cookie', 'item.cookie-pistacho': 'Pistachio & Raspberry Cookie',
+      'item.cookie-cafe': 'Coffee & Salted Caramel Cookie',
+      'item.cake-coco': 'Coconut Cake <span class="badge-casa">house made</span>',
+      'sec.specials': 'House Specials',
+      'item.mbeju-aguije': 'Mbeju Aguije <span class="badge-casa">special</span>',
+      'desc.mbeju-aguije': 'Mbeju base, blue cheese cream, mixed greens, prosciutto, balsamic reduction, pickled radish',
+      'item.mbeju-caprese': 'Mbeju Caprese <span class="badge-casa">special</span>',
+      'desc.mbeju-caprese': 'Mbeju base, fresh mozzarella cream, pesto, mixed greens, confit cherry tomato',
+      'item.bagel-chipa': 'Chipa Bagel <span class="badge-casa">special</span>',
+      'desc.bagel-chipa': 'House chipa dough, cream cheese, prosciutto, arugula and tomato',
+      'sec.desserts': 'Fresh Desserts',
+      'item.torta-choco': 'Moist Chocolate Cake <span class="badge-casa">house made</span>',
+      'item.yogurt': 'Greek Yogurt with Fruit',
+      'item.ice-cream': 'House-Made Ice Cream <span class="badge-casa">artisan</span>',
+      'desc.ice-cream': 'Handcrafted at Aguije. Ask for today\'s flavors.',
+      'note.ice-cream-add': 'Add ice cream to any dessert!',
+      'sec.sandwiches': 'Sandwiches', 'note.with-fries': 'All served with fries',
+      'item.grill-chesse': 'Grilled Cheese',
+      'desc.grill-chesse': 'Country Bread, Fontina, Cheddar, Mozzarella. With house tomato jam',
+      'item.atun': 'Tuna',
+      'desc.atun': 'White Bread, tuna, mayo, pickle, red onion, cheddar, chives',
+      'item.pollo-crispy': 'Crispy Chicken',
+      'desc.pollo-crispy': 'Brioche Bun, tasty mayo, crispy chicken, pickled cucumber, iceberg lettuce',
+      'item.cheese-burger': 'Cheeseburger',
+      'desc.cheese-burger': 'French Bread, tasty mayo, house blend, cheese, spicy bacon',
+      'item.club-sandwich': 'Club Sandwich Aguije <span class="badge-nuevo">new</span>',
+      'desc.club-sandwich': 'White Bread, house mayo, marinated chicken, mixed greens, ham & cheese, bacon, egg',
+      'item.focaccia': 'Mortadella Focaccia',
+      'desc.focaccia': 'Mortadella, fresh mozza cream, pesto, arugula, confit cherry tomato',
+      'sec.toasts': 'Toasts',
+      'item.capresse-toast': 'Caprese',
+      'desc.capresse-toast': 'Country bread, pesto, mozzarella, confit tomato, basil',
+      'item.hummus-huevo': 'Hummus & Egg', 'desc.hummus-huevo': 'Hummus, avocado, grilled egg',
+      'item.langostinos': 'Prawns', 'desc.langostinos': 'Guacamole, seared prawns, cilantro',
+      'desc.aguije-toast': 'Seasoned ricotta, avocado, egg',
+      'note.brunch-hours': '<span>Brunch</span> · Saturdays & Sundays · 9am to 3pm',
+      'combo1.subtitle': 'The Gentle Wake-Up',
+      'combo1.item1': 'Coffee of choice (Latte, Flat White, Americano, Espresso)',
+      'combo1.item2': 'Scrambled Eggs', 'combo1.item3': 'Orange Juice',
+      'combo1.item4': 'Bread Basket + Jam + Cream Cheese',
+      'combo2.subtitle': 'The Full Treat',
+      'combo2.item1': 'Coffee of choice (Americano, Latte, Flat White, Espresso)',
+      'combo2.item2': 'Scrambled Eggs + Bacon', 'combo2.item3': 'Orange Juice',
+      'combo2.item4': 'Dessert of choice (Croissant Pudding or Coffee & Salted Caramel Cookie)',
+      'combo2.item5': 'Bread Basket + Cheese Puffs + Jam + Cream Cheese',
+      'combo3.subtitle': 'Share & Enjoy',
+      'combo3.item1': '2 Coffees of choice + Mbeju or Cheese Puffs',
+      'combo3.item2': '2 Scrambled Eggs + Bacon + Avocado',
+      'combo3.item3': '2 Orange Juices',
+      'combo3.item4': '2 Desserts (Bread Pudding + Coffee & Salted Caramel Cookie)',
+      'after.bar-title': 'Aguije Bar', 'after.hours': 'Thu to Sun · From 6:30pm',
+      'item.vermut': 'Vermouth', 'picada.title': 'Aguije Snack Board',
+      'item.hummus-dip': 'Hummus Dip + Crudités + Daily Bread',
+      'item.bombitas-papa': 'Potato Puffs + Dill Aioli',
+      'item.empanaditas': 'Empanada Trio', 'desc.empanaditas': 'Beef, Ham & Cheese, Chipaguazú',
+      'item.papas-beurre': 'Butter Fries', 'desc.papas-beurre': 'Parmesan + Lemon + Aioli',
+    }
+  };
+
+  let currentLang = 'es';
+
+  function applyLang(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
 </script>
 </body>
 </html>
