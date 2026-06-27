@@ -180,9 +180,14 @@
       max-width: 320px;
       line-height: 1.45;
     }
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
     .hero-cta {
       display: inline-block;
-      margin-top: 2rem;
       padding: 0.85rem 2.2rem;
       background: var(--crema);
       color: var(--verde-dark);
@@ -194,11 +199,22 @@
       text-decoration: none;
       border-radius: 100px;
       transition: var(--transition);
-      align-self: flex-start;
+      min-width: 10rem;
+      text-align: center;
     }
     .hero-cta:hover {
       background: var(--white);
       transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+    .hero-cta.outline {
+      background: transparent;
+      color: var(--crema);
+      border: 2px solid rgba(245,212,165,0.7);
+    }
+    .hero-cta.outline:hover {
+      background: rgba(245,212,165,0.15);
+      border-color: var(--crema);
       box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     }
 
@@ -1393,13 +1409,6 @@
       </picture>
       <div class="carousel-slide-overlay"></div>
     </div>
-    <div class="carousel-slide">
-      <picture>
-        <source srcset="images/foto7.webp" type="image/webp">
-        <img src="images/foto7.jpg" alt="Brunch Aguije" loading="lazy" decoding="async">
-      </picture>
-      <div class="carousel-slide-overlay"></div>
-    </div>
 
     <button class="carousel-btn carousel-btn-prev" id="carouselPrev" aria-label="Anterior">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
@@ -1417,7 +1426,10 @@
     <h1 class="hero-logo">aguije</h1>
     <span class="hero-year">2 0 2 5</span>
     <p class="hero-tagline">gracias en guaraní — una palabra que nace desde el corazón</p>
-    <a href="#menu" class="hero-cta">Ver el menú</a>
+    <div class="hero-btns">
+      <a href="#menu" class="hero-cta" id="heroBtnMenu">Ver el menú</a>
+      <a href="#reservas" class="hero-cta outline" id="heroBtnReservar">Reservar</a>
+    </div>
   </div>
 
   <!-- Scroll indicator -->
@@ -2486,6 +2498,31 @@
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => applyLang(btn.dataset.lang));
   });
+
+  // ── Hero buttons auto language switch ──
+  const heroBtnLabels = {
+    es: { menu: 'Ver el menú', reservar: 'Reservar' },
+    en: { menu: 'See the menu', reservar: 'Book a table' }
+  };
+  let heroBtnLang = 'es';
+  const heroBtnMenu = document.getElementById('heroBtnMenu');
+  const heroBtnReservar = document.getElementById('heroBtnReservar');
+
+  setInterval(() => {
+    heroBtnLang = heroBtnLang === 'es' ? 'en' : 'es';
+    const labels = heroBtnLabels[heroBtnLang];
+    heroBtnMenu.style.opacity = '0';
+    heroBtnReservar.style.opacity = '0';
+    setTimeout(() => {
+      heroBtnMenu.textContent = labels.menu;
+      heroBtnReservar.textContent = labels.reservar;
+      heroBtnMenu.style.opacity = '1';
+      heroBtnReservar.style.opacity = '1';
+    }, 200);
+  }, 2000);
+
+  heroBtnMenu.style.transition = 'opacity 0.2s ease, background 0.3s, transform 0.3s, box-shadow 0.3s';
+  heroBtnReservar.style.transition = 'opacity 0.2s ease, background 0.3s, transform 0.3s, box-shadow 0.3s, border-color 0.3s';
 </script>
 </body>
 </html>
