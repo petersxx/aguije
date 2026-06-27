@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aguije — Cafetería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Variables ── */
+    :root {
+      --verde:        #7A8A52;
+      --verde-dark:   #4E5E34;
+      --verde-light:  #9AAA6A;
+      --crema:        #F5D4A5;
+      --crema-light:  #FDF0D8;
+      --peach:        #F2C898;
+      --marron:       #7B4A2D;
+      --marron-dark:  #3D2010;
+      --white:        #FFFBF2;
+
+      --ff-display: 'Fredoka', sans-serif;
+      --ff-script:  'Dancing Script', cursive;
+      --ff-body:    'Nunito', sans-serif;
+
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--ff-body);
+      background: var(--white);
+      color: var(--marron-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: var(--crema);
+      transition: box-shadow var(--transition);
+    }
+    nav.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    .nav-logo {
+      font-family: var(--ff-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #111;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--ff-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #111;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      transition: opacity var(--transition);
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-burger span {
+      display: block;
+      width: 26px;
+      height: 2px;
+      background: #111;
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* ── HERO ── */
+    #inicio {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    /* Carousel fills the entire hero */
+    .carousel {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+      will-change: opacity;
+    }
+    .carousel-slide.active { opacity: 1; }
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* Dark gradient overlay for text legibility */
+    .carousel-slide-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(20,28,10,0.72) 0%, rgba(20,28,10,0.3) 55%, rgba(20,28,10,0.15) 100%),
+        linear-gradient(to top,   rgba(20,28,10,0.6) 0%, transparent 40%);
+    }
+
+    /* Content floats above carousel */
+    .hero-content {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 5vw;
+      padding-top: 70px;
+    }
+    .hero-est {
+      font-family: var(--ff-script);
+      font-size: 1.4rem;
+      color: var(--crema);
+      opacity: 0.8;
+      margin-bottom: 0.15rem;
+    }
+    .hero-logo {
+      font-family: var(--ff-display);
+      font-size: clamp(5rem, 13vw, 10rem);
+      font-weight: 700;
+      color: var(--crema);
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      text-shadow: 0 4px 40px rgba(0,0,0,0.3);
+    }
+    .hero-year {
+      font-family: var(--ff-body);
+      font-size: 0.95rem;
+      color: var(--crema);
+      opacity: 0.55;
+      letter-spacing: 0.25em;
+      margin-top: 0.6rem;
+    }
+    .hero-tagline {
+      font-family: var(--ff-script);
+      font-size: 1.35rem;
+      color: var(--crema);
+      opacity: 0.85;
+      margin-top: 2.5rem;
+      max-width: 320px;
+      line-height: 1.45;
+    }
+    .hero-cta {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.85rem 2.2rem;
+      background: var(--crema);
+      color: var(--verde-dark);
+      font-family: var(--ff-body);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 100px;
+      transition: var(--transition);
+      align-self: flex-start;
+    }
+    .hero-cta:hover {
+      background: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+
+    /* Carousel controls */
+    .carousel-dots {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.6rem;
+      z-index: 20;
+    }
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(245,212,165,0.35);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+    .carousel-dot.active {
+      background: var(--crema);
+      width: 24px;
+      border-radius: 4px;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      background: rgba(245,212,165,0.12);
+      border: 1px solid rgba(245,212,165,0.25);
+      color: var(--crema);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(6px);
+    }
+    .carousel-btn:hover {
+      background: rgba(245,212,165,0.28);
+      border-color: rgba(245,212,165,0.55);
+    }
+    .carousel-btn svg { width: 20px; height: 20px; }
+    .carousel-btn-prev { left: 1.5rem; }
+    .carousel-btn-next { right: 1.5rem; }
+    .carousel-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: var(--crema);
+      width: 0%;
+      opacity: 0.45;
+      transition: width linear;
+      z-index: 20;
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.2rem;
+      right: 2.5rem;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--crema);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      animation: bounce 2.2s infinite;
+    }
+    .hero-scroll svg { width: 18px; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(7px); }
+    }
+
+    /* ── WAVE DIVIDER ── */
+    .wave {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+    .wave svg { display: block; width: 100%; }
+
+    /* ── NOSOTROS ── */
+    #nosotros {
+      background: var(--crema-light);
+      padding: 6rem 2rem;
+    }
+    .nosotros-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .nosotros-deco {
+      font-family: var(--ff-display);
+      font-size: clamp(5rem, 10vw, 8rem);
+      font-weight: 700;
+      color: var(--verde);
+      line-height: 0.9;
+      opacity: 0.15;
+      position: absolute;
+      left: -1rem;
+      top: -1rem;
+      pointer-events: none;
+    }
+    .nosotros-left {
+      position: relative;
+    }
+    .nosotros-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--verde);
+      color: var(--crema);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .nosotros-title {
+      font-family: var(--ff-display);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 700;
+      color: var(--verde);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .nosotros-sub {
+      font-family: var(--ff-script);
+      font-size: 1.4rem;
+      color: var(--marron);
+      margin-bottom: 2rem;
+    }
+    .nosotros-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(122,138,82,0.2);
+    }
+    .nosotros-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nosotros-right { padding: 1rem 0; }
+    .nosotros-text {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--marron-dark);
+      margin-bottom: 1.2rem;
+    }
+    .nosotros-text strong {
+      color: var(--verde-dark);
+      font-weight: 700;
+    }
+    .nosotros-text em { font-style: italic; }
+    .nosotros-firma {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(122,138,82,0.2);
+    }
+    .nosotros-firma-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--verde);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nosotros-firma-icon svg { width: 28px; }
+    .nosotros-firma-text small {
+      display: block;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--verde);
+      opacity: 0.8;
+      margin-bottom: 0.2rem;
+    }
+    .nosotros-firma-name {
+      font-family: var(--ff-script);
+      font-size: 1.6rem;
+      color: var(--marron);
+      font-weight: 700;
+    }
+
+    /* ── MENU ── */
+    #menu {
+      background: var(--white);
+      padding: 5rem 2rem 6rem;
+    }
+    .menu-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .section-label {
+      display: inline-block;
+      font-family: var(--ff-script);
+      font-size: 1.1rem;
+      color: var(--verde);
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      color: var(--marron-dark);
+      line-height: 1;
+    }
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 3.5rem;
+    }
+    .tab-btn {
+      padding: 0.65rem 1.5rem;
+      border: 2px solid var(--verde);
+      background: transparent;
+      color: var(--verde);
+      font-family: var(--ff-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .tab-btn:hover, .tab-btn.active {
+      background: var(--verde);
+      color: var(--crema);
+    }
+    .tab-content {
+      display: none;
+      max-width: 900px;
+      margin: 0 auto;
+      animation: fadeIn 0.35s ease;
+    }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Menu subsections */
+    .menu-section {
+      margin-bottom: 3rem;
+    }
+    .menu-section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .menu-section-title {
+      font-family: var(--ff-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--verde-dark);
+      letter-spacing: 0.02em;
+    }
+    .menu-section-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba(122,138,82,0.3), transparent);
+    }
+    .menu-subsection-label {
+      text-align: center;
+      margin: 1.5rem 0 1rem;
+    }
+    .menu-subsection-label span {
+      display: inline-block;
+      background: var(--crema);
+      color: var(--verde-dark);
+      font-family: var(--ff-body);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 1.2rem;
+      border-radius: 100px;
+    }
+
+    /* Menu items */
+    .menu-items { display: flex; flex-direction: column; gap: 0; }
+    .menu-item {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(122,138,82,0.1);
+      gap: 1rem;
+      transition: background var(--transition);
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item:hover { background: rgba(245,212,165,0.2); border-radius: 8px; padding-left: 0.75rem; padding-right: 0.75rem; }
+    .item-left { flex: 1; min-width: 0; }
+    .item-name {
+      font-family: var(--ff-body);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--marron-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .item-name .badge-casa {
+      font-size: 0.65rem;
+      background: var(--verde);
+      color: var(--crema);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+    .item-name .badge-nuevo {
+      font-size: 0.65rem;
+      background: var(--marron);
+      color: var(--white);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+    .item-desc {
+      font-size: 0.85rem;
+      color: var(--marron);
+      opacity: 0.75;
+      margin-top: 0.25rem;
+      line-height: 1.4;
+    }
+    .item-price {
+      font-family: var(--ff-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--verde-dark);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Metodos filtrados box */
+    .metodos-box {
+      background: var(--crema-light);
+      border: 1px solid rgba(122,138,82,0.2);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1rem;
+    }
+    .metodos-box h4 {
+      font-family: var(--ff-display);
+      font-size: 1rem;
+      color: var(--verde-dark);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    .metodos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .metodo-item h5 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--marron);
+      margin-bottom: 0.4rem;
+    }
+    .metodo-item p {
+      font-size: 0.85rem;
+      color: var(--marron-dark);
+      line-height: 1.6;
+    }
+
+    /* Brunch combos */
+    .combos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .combo-card {
+      background: var(--crema-light);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      border: 1px solid rgba(122,138,82,0.15);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .combo-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(122,138,82,0.15);
+    }
+    .combo-num {
+      position: absolute;
+      top: -0.5rem;
+      right: 1rem;
+      font-family: var(--ff-display);
+      font-size: 5rem;
+      font-weight: 700;
+      color: var(--verde);
+      opacity: 0.07;
+      line-height: 1;
+    }
+    .combo-name {
+      font-family: var(--ff-display);
+      font-size: 1.3rem;
+      color: var(--verde-dark);
+      margin-bottom: 0.25rem;
+    }
+    .combo-subtitle {
+      font-family: var(--ff-script);
+      font-size: 1.1rem;
+      color: var(--marron);
+      margin-bottom: 1.25rem;
+    }
+    .combo-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+    .combo-items li {
+      font-size: 0.9rem;
+      color: var(--marron-dark);
+      padding-left: 1.1rem;
+      position: relative;
+      line-height: 1.4;
+    }
+    .combo-items li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--verde);
+      font-weight: 700;
+    }
+    .combo-price {
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      color: var(--verde-dark);
+      font-weight: 700;
+    }
+    .brunch-note {
+      text-align: center;
+      margin-top: 2.5rem;
+      padding: 1.25rem 2rem;
+      background: var(--verde);
+      border-radius: 12px;
+      color: var(--crema);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .brunch-note span { font-family: var(--ff-script); font-size: 1.1rem; }
+
+    /* After office */
+    .after-header-strip {
+      background: var(--verde);
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .after-header-strip h3 {
+      font-family: var(--ff-display);
+      font-size: 1.4rem;
+      color: var(--crema);
+    }
+    .after-header-strip span {
+      font-size: 0.85rem;
+      color: var(--crema);
+      opacity: 0.8;
+      font-weight: 600;
+    }
+    .picada-box {
+      background: linear-gradient(135deg, var(--crema-light), var(--crema));
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    .picada-title {
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      color: var(--verde-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── INSTAGRAM ── */
+    #galeria {
+      background: #fafafa;
+      padding: 5rem 0 4rem;
+      overflow: hidden;
+    }
+    .ig-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding: 0 2rem;
+    }
+    .ig-header .section-label { color: var(--verde); }
+    .ig-header .section-title { color: var(--marron-dark); }
+    .ig-handle-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    .ig-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      padding: 2px;
+      flex-shrink: 0;
+    }
+    .ig-avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--verde);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fafafa;
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--crema);
+    }
+    .ig-handle-text {
+      font-family: var(--ff-body);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #111;
+    }
+    .ig-follow-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #0095f6;
+      color: #fff;
+      font-family: var(--ff-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.45rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .ig-follow-btn:hover { background: #0080d6; }
+
+    /* Infinite feed */
+    .ig-feed-wrap {
+      overflow: hidden;
+      padding: 1rem 0 1.5rem;
+    }
+    .ig-feed {
+      display: flex;
+      gap: 1rem;
+      width: max-content;
+      padding: 0.5rem 0;
+      animation: igScroll 38s linear infinite;
+    }
+    @keyframes igScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Post card */
+    .ig-card {
+      width: 290px;
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .ig-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+    }
+    .ig-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.7rem 0.85rem;
+    }
+    .ig-card-user {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    .ig-card-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      padding: 1.5px;
+      flex-shrink: 0;
+    }
+    .ig-card-avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--verde);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #fff;
+      font-family: var(--ff-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--crema);
+    }
+    .ig-card-username {
+      font-family: var(--ff-body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.1;
+    }
+    .ig-card-time {
+      font-size: 0.72rem;
+      color: #8e8e8e;
+    }
+    .ig-card-dots {
+      color: #111;
+      font-size: 1.1rem;
+      line-height: 1;
+      letter-spacing: 0.05em;
+    }
+    .ig-card-img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+    .ig-card-actions {
+      display: flex;
+      align-items: center;
+      padding: 0.6rem 0.85rem 0.3rem;
+      gap: 0.9rem;
+    }
+    .ig-card-actions svg {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .ig-card-actions svg:hover { transform: scale(1.15); }
+    .ig-card-save { margin-left: auto; }
+    .ig-card-body {
+      padding: 0 0.85rem 0.9rem;
+    }
+    .ig-card-likes {
+      font-family: var(--ff-body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 0.25rem;
+    }
+    .ig-card-caption {
+      font-family: var(--ff-body);
+      font-size: 0.82rem;
+      color: #111;
+      line-height: 1.45;
+    }
+    .ig-card-caption strong { font-weight: 700; }
+    .ig-card-hashtags {
+      color: #00376b;
+      font-size: 0.8rem;
+      margin-top: 0.2rem;
+    }
+    .ig-card-comments {
+      font-size: 0.78rem;
+      color: #8e8e8e;
+      margin-top: 0.3rem;
+      cursor: pointer;
+    }
+    .ig-card-comments:hover { color: #555; }
+
+    /* ── DONDE ENCONTRARNOS ── */
+    #donde {
+      background: var(--crema-light);
+      padding: 5rem 2rem;
+    }
+    .donde-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .donde-info { }
+    .donde-info .section-label { color: var(--verde); }
+    .donde-info .section-title {
+      color: var(--marron-dark);
+      margin-bottom: 2.5rem;
+    }
+    .donde-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+    .donde-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--verde);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .donde-icon svg { width: 20px; color: var(--crema); }
+    .donde-detail-text h4 {
+      font-family: var(--ff-display);
+      font-size: 1rem;
+      color: var(--verde-dark);
+      margin-bottom: 0.2rem;
+    }
+    .donde-detail-text p, .donde-detail-text a {
+      font-size: 0.95rem;
+      color: var(--marron);
+      line-height: 1.55;
+      text-decoration: none;
+    }
+    .donde-detail-text a:hover { text-decoration: underline; }
+    .donde-map {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.12);
+      height: 420px;
+    }
+    .donde-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .donde-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .donde-map { height: 300px; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--marron-dark);
+      color: var(--crema);
+      padding: 4rem 2rem 2.5rem;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(245,212,165,0.15);
+    }
+    .footer-brand-name {
+      font-family: var(--ff-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--crema);
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+    .footer-brand-tagline {
+      font-family: var(--ff-script);
+      font-size: 1.1rem;
+      color: var(--crema);
+      opacity: 0.65;
+      margin-bottom: 1.5rem;
+    }
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--crema);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      opacity: 0.8;
+      transition: opacity var(--transition);
+    }
+    .footer-social a:hover { opacity: 1; }
+    .footer-col h4 {
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      color: var(--crema);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.03em;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .footer-col ul li {
+      font-size: 0.9rem;
+      color: var(--crema);
+      opacity: 0.7;
+      line-height: 1.4;
+    }
+    .footer-col ul li strong { opacity: 1; font-weight: 700; display: block; }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2rem;
+      font-size: 0.8rem;
+      color: var(--crema);
+      opacity: 0.45;
+    }
+
+    /* ── MOBILE NAV ── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--verde-dark);
+      z-index: 99;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--ff-display);
+      font-size: 2rem;
+      color: var(--crema);
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity var(--transition);
+    }
+    .mobile-menu a:hover { opacity: 0.7; }
+    .mobile-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      background: none;
+      border: none;
+      color: var(--crema);
+      font-size: 2rem;
+      cursor: pointer;
+      font-family: var(--ff-display);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-content { padding: 0 2rem; padding-top: 70px; }
+      .carousel-btn-prev { left: 0.75rem; }
+      .carousel-btn-next { right: 0.75rem; }
+      .nosotros-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }
+      .galeria-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 220px 220px 220px;
+      }
+      .galeria-item:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 2; }
+      .galeria-item:nth-child(2) { grid-column: 1 / 2; grid-row: 2 / 3; }
+      .galeria-item:nth-child(3) { grid-column: 2 / 3; grid-row: 2 / 4; }
+      .galeria-item:nth-child(4) { grid-column: 1 / 2; grid-row: 3 / 4; }
+      .galeria-item:nth-child(5) { display: none; }
+      .galeria-item:nth-child(6) { display: none; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      .hero-content { padding: 0 1.5rem; padding-top: 70px; }
+      .hero-scroll { right: 1rem; }
+      #nosotros { padding: 4rem 1.25rem; }
+      #menu { padding: 4rem 1.25rem 5rem; }
+      #galeria { padding: 4rem 1.25rem; }
+      footer { padding: 3rem 1.25rem 2rem; }
+      .combos-grid { grid-template-columns: 1fr; }
+      .galeria-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 180px 180px 180px;
+      }
+      .after-header-strip { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="#inicio" class="nav-logo">aguije</a>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#menu">El Menú</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#donde">Ubicación</a></li>
+  </ul>
+  <button class="nav-burger" id="burgerBtn" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="closeMenu">✕</button>
+  <a href="#nosotros" class="mobile-link">Nosotros</a>
+  <a href="#menu" class="mobile-link">El Menú</a>
+  <a href="#galeria" class="mobile-link">Galería</a>
+  <a href="#donde" class="mobile-link">Ubicación</a>
+</div>
+
+<!-- ── HERO ── -->
+<section id="inicio">
+
+  <!-- Carousel fullscreen background -->
+  <div class="carousel" id="heroCarousel">
+    <div class="carousel-slide active">
+      <img src="images/hero3.jpg" alt="El equipo Aguije">
+      <div class="carousel-slide-overlay"></div>
+    </div>
+    <div class="carousel-slide">
+      <img src="images/hero1.jpg" alt="Barra Aguije">
+      <div class="carousel-slide-overlay"></div>
+    </div>
+    <div class="carousel-slide">
+      <img src="images/hero2.jpg" alt="Mbeju Aguije">
+      <div class="carousel-slide-overlay"></div>
+    </div>
+    <div class="carousel-slide">
+      <img src="images/foto7.jpg" alt="Brunch Aguije">
+      <div class="carousel-slide-overlay"></div>
+    </div>
+
+    <button class="carousel-btn carousel-btn-prev" id="carouselPrev" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="carousel-btn carousel-btn-next" id="carouselNext" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <div class="carousel-dots" id="carouselDots"></div>
+    <div class="carousel-progress" id="carouselProgress"></div>
+  </div>
+
+  <!-- Content on top -->
+  <div class="hero-content">
+    <span class="hero-est">est.</span>
+    <h1 class="hero-logo">aguije</h1>
+    <span class="hero-year">2 0 2 5</span>
+    <p class="hero-tagline">gracias en guaraní — una palabra que nace desde el corazón</p>
+    <a href="#menu" class="hero-cta">Ver el menú</a>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+
+</section>
+
+<!-- ── WAVE ── -->
+<div class="wave">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60">
+    <path d="M0,30 C240,0 480,60 720,30 C960,0 1200,60 1440,30 L1440,60 L0,60 Z" fill="#FDF0D8"/>
+  </svg>
+</div>
+
+<!-- ── NOSOTROS ── -->
+<section id="nosotros">
+  <div class="nosotros-inner">
+    <div class="nosotros-left">
+      <img src="images/foto4.jpg" alt="Aguije — sabores con gratitud" class="nosotros-img">
+    </div>
+    <div class="nosotros-right">
+      <div class="nosotros-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        nuestra historia
+      </div>
+      <h2 class="nosotros-title">Aguije</h2>
+      <p class="nosotros-sub">( gracias en guaraní )</p>
+      <p class="nosotros-text">
+        Es una palabra que nace desde el corazón y nos recuerda que todo lo que recibimos de la tierra, del entorno y de las personas merece ser honrado con gratitud.
+      </p>
+      <p class="nosotros-text">
+        <strong>En nuestra cocina, esa gratitud se transforma</strong> en sabores, en cuidado, en dedicación. Cada plato nace de ese espíritu.
+      </p>
+      <p class="nosotros-text">
+        No buscamos complicar, sino celebrar lo simple: los ingredientes de estación, lo que cultivamos, lo que conseguimos de manera consciente. <em>Nos inspira la cocina tradicional</em>, la paraguaya fusionamos con toques modernos.
+      </p>
+      <p class="nosotros-text">
+        <em><strong>Esta carta está viva.</strong></em> Cambia con las estaciones, con lo que hay disponible, con lo que nos inspira cada día. Queremos que cada comida sea una experiencia que conecte con el presente, con lo esencial, con el placer de compartir y de nutrirse bien.
+      </p>
+      <div class="nosotros-firma">
+        <div class="nosotros-firma-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#F5D4A5" stroke-width="1.5">
+            <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/>
+          </svg>
+        </div>
+        <div>
+          <small>en esta casa cocina</small>
+          <div class="nosotros-firma-name">Leticia Leiva</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WAVE ── -->
+<div class="wave" style="background: #FDF0D8;">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60">
+    <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,20 1440,30 L1440,60 L0,60 Z" fill="#FFFBF2"/>
+  </svg>
+</div>
+
+<!-- ── MENÚ ── -->
+<section id="menu">
+  <div class="menu-header">
+    <span class="section-label">lo que hacemos</span>
+    <h2 class="section-title">el menú</h2>
+  </div>
+
+  <div class="menu-tabs">
+    <button class="tab-btn active" data-tab="cafeteria">Cafetería</button>
+    <button class="tab-btn" data-tab="mostrador">Mostrador</button>
+    <button class="tab-btn" data-tab="cocina">Cocina</button>
+    <button class="tab-btn" data-tab="brunch">Brunch</button>
+    <button class="tab-btn" data-tab="after">After Office</button>
+  </div>
+
+  <!-- CAFETERÍA -->
+  <div class="tab-content active" id="tab-cafeteria">
+    <div class="menu-section">
+      <div class="menu-section-header">
+        <h3 class="menu-section-title">Cafetería</h3>
+        <div class="menu-section-line"></div>
+      </div>
+
+      <div class="menu-subsection-label"><span>Calientes</span></div>
+      <div class="menu-items">
+        <div class="menu-item"><div class="item-left"><div class="item-name">Espresso <span class="badge-casa">doble</span></div></div><span class="item-price">18 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Americano</div></div><span class="item-price">20 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Latte</div></div><span class="item-price">25 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Flat White</div></div><span class="item-price">28 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Cappuccino</div></div><span class="item-price">25 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Mocca</div></div><span class="item-price">28 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Caramel</div></div><span class="item-price">28 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Funky Flat</div></div><span class="item-price">30 MIL</span></div>
+      </div>
+
+      <div class="menu-subsection-label" style="margin-top:2rem"><span>Fríos</span></div>
+      <div class="menu-items">
+        <div class="menu-item"><div class="item-left"><div class="item-name">Iced Latte</div></div><span class="item-price">30 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Iced Coffee</div></div><span class="item-price">25 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Coffee Tonic</div></div><span class="item-price">30 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Iced Mocca</div></div><span class="item-price">32 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Iced Caramel</div></div><span class="item-price">32 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Cold Brew</div></div><span class="item-price">22 MIL</span></div>
+      </div>
+
+      <div class="metodos-box" style="margin-top:2rem">
+        <h4>Métodos Filtrados</h4>
+        <div class="metodos-grid">
+          <div class="metodo-item">
+            <h5>V60</h5>
+            <p>1 taza — 25 MIL<br>2 tazas — 30 MIL</p>
+          </div>
+          <div class="metodo-item">
+            <h5>Prensa Francesa</h5>
+            <p>1 taza — 25 MIL<br>2 tazas — 30 MIL</p>
+          </div>
+        </div>
+        <p style="font-size:0.8rem; color:var(--marron); opacity:0.7; margin-top:0.75rem">Se pueden pedir fríos</p>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-header">
+        <h3 class="menu-section-title">Otras Bebidas</h3>
+        <div class="menu-section-line"></div>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item"><div class="item-left"><div class="item-name">Jugo natural de Naranja</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Jugo natural de Durazno</div></div><span class="item-price">18 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Jugo natural de Frutilla</div></div><span class="item-price">24 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Limonada</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Té</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Chocolate caliente / frío</div></div><span class="item-price">25 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Cocido Caliente</div></div><span class="item-price">20 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Agua con / sin gas</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Gaseosas</div></div><span class="item-price">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOSTRADOR -->
+  <div class="tab-content" id="tab-mostrador">
+    <div class="menu-section">
+      <div class="menu-section-header">
+        <h3 class="menu-section-title">Panadería</h3>
+        <div class="menu-section-line"></div>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item"><div class="item-left"><div class="item-name">Medialuna sin relleno</div></div><span class="item-price">10 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Medialuna con relleno</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Danesa de Pastelera</div></div><span class="item-price">20 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Danesa con Frutas de Estación</div></div><span class="item-price">30 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Roll de Canela</div></div><span class="item-price">16 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Croissant</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Croissant de JYQ</div></div><span class="item-price">23 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Pepa de Chipa <span class="badge-casa">de la casa</span></div></div><span class="item-price">25 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Mbeju Tradicional <span class="badge-casa">de la casa</span></div></div><span class="item-price">20 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Bombita de Queso <span class="badge-casa">de la casa</span></div></div><span class="item-price">15 MIL</span></div>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-header">
+        <h3 class="menu-section-title">Pastelería</h3>
+        <div class="menu-section-line"></div>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item"><div class="item-left"><div class="item-name">Cookie Clásica</div></div><span class="item-price">15 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Cookie de Pistacho y Frambuesa</div></div><span class="item-price">27 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Cookie de Café y Caramelo Salado</div></div><span class="item-price">20 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Cake de Coco <span class="badge-casa">de la casa</span></div></div><span class="item-price">27 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Carrot Cake</div></div><span class="item-price">35 MIL</span></div>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-header">
+        <h3 class="menu-section-title">Especiales de la Casa</h3>
+        <div class="menu-section-line"></div>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Mbeju Aguije <span class="badge-casa">especial</span></div>
+            <div class="item-desc">Base de mbeju, crema de queso azul, mix de verdes, jamón crudo, reducción balsámica, rabanito encurtido</div>
+          </div>
+          <span class="item-price">48 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Mbeju Caprese <span class="badge-casa">especial</span></div>
+            <div class="item-desc">Base de mbeju, crema de queso mozzarella fresco, pesto, mix de verdes, tomate cherry confit</div>
+          </div>
+          <span class="item-price">26 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Bagel de Chipa <span class="badge-casa">especial</span></div>
+            <div class="item-desc">Masa de chipa de la casa, queso crema, jamón crudo, rúcula y tomate</div>
+          </div>
+          <span class="item-price">25 MIL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-header">
+        <h3 class="menu-section-title">Postres al Momento</h3>
+        <div class="menu-section-line"></div>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item"><div class="item-left"><div class="item-name">French Toast</div></div><span class="item-price">32 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Torta Húmeda de Chocolate <span class="badge-casa">de la casa</span></div></div><span class="item-price">37 MIL</span></div>
+        <div class="menu-item"><div class="item-left"><div class="item-name">Yogurt Griego con Frutas</div></div><span class="item-price">35 MIL</span></div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Helados de la Casa <span class="badge-casa">artesanal</span></div>
+            <div class="item-desc">Lo elaboramos artesanalmente en Aguije. Consultá los sabores disponibles.</div>
+          </div>
+          <span class="item-price">12 MIL</span>
+        </div>
+      </div>
+      <p style="font-size:0.85rem; color:var(--verde-dark); margin-top:1rem; font-weight:600">¡Podés agregar helado a cualquier postre!</p>
+    </div>
+  </div>
+
+  <!-- COCINA -->
+  <div class="tab-content" id="tab-cocina">
+    <div class="menu-section">
+      <div class="menu-section-header">
+        <h3 class="menu-section-title">Sándwiches</h3>
+        <div class="menu-section-line"></div>
+      </div>
+      <p style="font-size:0.8rem; color:var(--marron); opacity:0.7; margin-bottom:1.5rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase">Todos salen con papas</p>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Grill Chesse</div>
+            <div class="item-desc">Pan de Campo, Queso Fontina, Queso Cheddar, Mozzarella. Con mermelada de tomate de la casa</div>
+          </div>
+          <span class="item-price">40 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">De Atún</div>
+            <div class="item-desc">Pan Lactal, atún, mayonesa, pepinillo, cebolla morada, queso cheddar, ciboulette</div>
+          </div>
+          <span class="item-price">47 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Pollo Crispy</div>
+            <div class="item-desc">Pan Brioche, mayo Tasty, pollo crispy, pepino encurtido, lechuga repollada</div>
+          </div>
+          <span class="item-price">42 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Cheese Burger</div>
+            <div class="item-desc">Pan francés, mayo tasty, blend de la casa, queso, bacon spicy</div>
+          </div>
+          <span class="item-price">40 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Club Sándwich Aguije <span class="badge-nuevo">nuevo</span></div>
+            <div class="item-desc">Pan lactal, mayo de la casa, pollo marinado, mix de verdes, jamón y queso, panceta, huevo</div>
+          </div>
+          <span class="item-price">45 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Focaccia Mortadela</div>
+            <div class="item-desc">Mortadela, crema de mozza fresca, pesto, rúcula, tomate cherry confit</div>
+          </div>
+          <span class="item-price">42 MIL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-section-header">
+        <h3 class="menu-section-title">Tostadas</h3>
+        <div class="menu-section-line"></div>
+      </div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Capresse</div>
+            <div class="item-desc">Pan de campo, pesto, mozzarella, tomate confitado, albahaca</div>
+          </div>
+          <span class="item-price">36 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Hummus & Huevo</div>
+            <div class="item-desc">Hummus, palta, huevo a la plancha</div>
+          </div>
+          <span class="item-price">32 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Langostinos</div>
+            <div class="item-desc">Guacamole, langostinos sellados, cilantro</div>
+          </div>
+          <span class="item-price">39 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Aguije</div>
+            <div class="item-desc">Ricota especiada, palta, huevo</div>
+          </div>
+          <span class="item-price">25 MIL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BRUNCH -->
+  <div class="tab-content" id="tab-brunch">
+    <div class="brunch-note">
+      <span>Brunch</span> · Sábados y Domingos de 9 a 15 hs
+    </div>
+    <div class="combos-grid" style="margin-top:2rem">
+      <div class="combo-card">
+        <span class="combo-num">1</span>
+        <div class="combo-name">Combo 1</div>
+        <div class="combo-subtitle">El despertar suave</div>
+        <ul class="combo-items">
+          <li>Café a elección (Latte, Flat White, Americano, Espresso)</li>
+          <li>Huevos revueltos</li>
+          <li>Jugo de Naranja</li>
+          <li>Panera + Mermelada + Queso Crema</li>
+        </ul>
+        <div class="combo-price">65 MIL</div>
+      </div>
+      <div class="combo-card">
+        <span class="combo-num">2</span>
+        <div class="combo-name">Combo 2</div>
+        <div class="combo-subtitle">El mimo completo</div>
+        <ul class="combo-items">
+          <li>Café a elección (Americano, Latte, Flat White, Espresso)</li>
+          <li>Huevos revueltos + Panceta</li>
+          <li>Jugo de Naranja</li>
+          <li>Postre a elección (Budín de Croissant o Cookie de Café y Caramelo Salado)</li>
+          <li>Panera + Bombitas de queso + Mermelada + Queso Crema</li>
+        </ul>
+        <div class="combo-price">85 MIL</div>
+      </div>
+      <div class="combo-card" style="background: linear-gradient(135deg, #ecd9b5, #f5d4a5)">
+        <span class="combo-num">3</span>
+        <div class="combo-name">Combo 3</div>
+        <div class="combo-subtitle">Para compartir y disfrutar</div>
+        <ul class="combo-items">
+          <li>2 Cafés a elección + Mbeju o Bombitas de Queso</li>
+          <li>2 Huevos revueltos + Panceta + Palta</li>
+          <li>2 Jugos de Naranja</li>
+          <li>2 Postres (Budín de Pan + Cookie de Café y Caramelo Salado)</li>
+        </ul>
+        <div class="combo-price">130 MIL</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AFTER OFFICE -->
+  <div class="tab-content" id="tab-after">
+    <div class="after-header-strip">
+      <h3>Barra Aguije</h3>
+      <span>Jueves a Domingos · Desde las 18:30 hs</span>
+    </div>
+
+    <div class="menu-items">
+      <div class="menu-item"><div class="item-left"><div class="item-name">Vmichelob 275 ml</div></div><span class="item-price">13 MIL</span></div>
+      <div class="menu-item"><div class="item-left"><div class="item-name">Múnich Ultra 275 ml</div></div><span class="item-price">10 MIL</span></div>
+      <div class="menu-item"><div class="item-left"><div class="item-name">Stella Artois 330 ml</div></div><span class="item-price">18 MIL</span></div>
+      <div class="menu-item"><div class="item-left"><div class="item-name">Coronita 210 ml</div></div><span class="item-price">15 MIL</span></div>
+      <div class="menu-item"><div class="item-left"><div class="item-name">Smirnoff Ice</div></div><span class="item-price">20 MIL</span></div>
+      <div class="menu-item"><div class="item-left"><div class="item-name">Fernet con Coca</div></div><span class="item-price">25 MIL</span></div>
+      <div class="menu-item"><div class="item-left"><div class="item-name">Gin Tonic</div></div><span class="item-price">25 MIL</span></div>
+      <div class="menu-item"><div class="item-left"><div class="item-name">Vermut</div></div><span class="item-price">25 MIL</span></div>
+    </div>
+
+    <div class="picada-box">
+      <div class="picada-title">Picada Aguije</div>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="item-left"><div class="item-name">Dip de Hummus + Crudités + Pan del Día</div></div>
+          <span class="item-price">25 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left"><div class="item-name">Bombitas de Papa + Alioli de Eneldo</div></div>
+          <span class="item-price">30 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Trío de Empanaditas</div>
+            <div class="item-desc">Carne, Jamón y Queso, Chipaguazú</div>
+          </div>
+          <span class="item-price">28 MIL</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Papas Fritas au Beurre</div>
+            <div class="item-desc">Parmesano + Limón + Lalioli</div>
+          </div>
+          <span class="item-price">25 MIL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WAVE ── -->
+<div class="wave" style="background: var(--white);">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60">
+    <path d="M0,20 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="#fafafa"/>
+  </svg>
+</div>
+
+<!-- ── INSTAGRAM ── -->
+<section id="galeria">
+  <div class="ig-header">
+    <span class="section-label">seguinos</span>
+    <h2 class="section-title">en instagram</h2>
+    <div class="ig-handle-row">
+      <div class="ig-avatar"><div class="ig-avatar-inner">a</div></div>
+      <span class="ig-handle-text">@aguije.py</span>
+      <a href="https://www.instagram.com/aguije.py/" target="_blank" rel="noopener" class="ig-follow-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        Seguir
+      </a>
+    </div>
+  </div>
+
+  <div class="ig-feed-wrap" id="igFeed">
+    <div class="ig-feed">
+
+      <a href="https://www.instagram.com/aguije.py/" target="_blank" rel="noopener" class="ig-card" style="text-decoration:none;color:inherit">
+        <div class="ig-card-header">
+          <div class="ig-card-user">
+            <div class="ig-card-avatar"><div class="ig-card-avatar-inner">a</div></div>
+            <div><div class="ig-card-username">aguije.py</div><div class="ig-card-time">2 d</div></div>
+          </div>
+          <span class="ig-card-dots">···</span>
+        </div>
+        <img src="images/hero3.jpg" alt="Equipo Aguije" class="ig-card-img">
+        <div class="ig-card-actions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <svg class="ig-card-save" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="ig-card-body">
+          <div class="ig-card-likes">312 Me gusta</div>
+          <div class="ig-card-caption"><strong>aguije.py</strong> Pasa pues, estamos abiertos 🌿 Tu lugar en Asunción para empezar bien el día.</div>
+          <div class="ig-card-hashtags">#AguijeCafe #AsuncionPY #CafeParaguay</div>
+          <div class="ig-card-comments">Ver los 18 comentarios</div>
+        </div>
+      </a>
+
+      <a href="https://www.instagram.com/aguije.py/" target="_blank" rel="noopener" class="ig-card" style="text-decoration:none;color:inherit">
+        <div class="ig-card-header">
+          <div class="ig-card-user">
+            <div class="ig-card-avatar"><div class="ig-card-avatar-inner">a</div></div>
+            <div><div class="ig-card-username">aguije.py</div><div class="ig-card-time">5 d</div></div>
+          </div>
+          <span class="ig-card-dots">···</span>
+        </div>
+        <img src="images/hero1.jpg" alt="Barra Aguije" class="ig-card-img">
+        <div class="ig-card-actions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <svg class="ig-card-save" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="ig-card-body">
+          <div class="ig-card-likes">487 Me gusta</div>
+          <div class="ig-card-caption"><strong>aguije.py</strong> Hecho con amor verdadero ☕ El café de la casa, preparado con dedicación y cariño.</div>
+          <div class="ig-card-hashtags">#Cafe #BaristaPY #EspressoLovers</div>
+          <div class="ig-card-comments">Ver los 24 comentarios</div>
+        </div>
+      </a>
+
+      <a href="https://www.instagram.com/aguije.py/" target="_blank" rel="noopener" class="ig-card" style="text-decoration:none;color:inherit">
+        <div class="ig-card-header">
+          <div class="ig-card-user">
+            <div class="ig-card-avatar"><div class="ig-card-avatar-inner">a</div></div>
+            <div><div class="ig-card-username">aguije.py</div><div class="ig-card-time">1 sem</div></div>
+          </div>
+          <span class="ig-card-dots">···</span>
+        </div>
+        <img src="images/hero2.jpg" alt="Mbeju Aguije" class="ig-card-img">
+        <div class="ig-card-actions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <svg class="ig-card-save" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="ig-card-body">
+          <div class="ig-card-likes">561 Me gusta</div>
+          <div class="ig-card-caption"><strong>aguije.py</strong> Mbeju de la casa 🫓 Cocina con raíces. Nuestra versión del clásico paraguayo.</div>
+          <div class="ig-card-hashtags">#Mbeju #CocinaParaguaya #AguijePY</div>
+          <div class="ig-card-comments">Ver los 37 comentarios</div>
+        </div>
+      </a>
+
+      <a href="https://www.instagram.com/aguije.py/" target="_blank" rel="noopener" class="ig-card" style="text-decoration:none;color:inherit">
+        <div class="ig-card-header">
+          <div class="ig-card-user">
+            <div class="ig-card-avatar"><div class="ig-card-avatar-inner">a</div></div>
+            <div><div class="ig-card-username">aguije.py</div><div class="ig-card-time">1 sem</div></div>
+          </div>
+          <span class="ig-card-dots">···</span>
+        </div>
+        <img src="images/foto4.jpg" alt="Cafetería Aguije" class="ig-card-img">
+        <div class="ig-card-actions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <svg class="ig-card-save" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="ig-card-body">
+          <div class="ig-card-likes">398 Me gusta</div>
+          <div class="ig-card-caption"><strong>aguije.py</strong> Buenos días desde Aguije ☀️ Croissant + latte = la combinación perfecta para arrancar.</div>
+          <div class="ig-card-hashtags">#Brunch #CafeAsuncion #BuenosDias</div>
+          <div class="ig-card-comments">Ver los 21 comentarios</div>
+        </div>
+      </a>
+
+      <a href="https://www.instagram.com/aguije.py/" target="_blank" rel="noopener" class="ig-card" style="text-decoration:none;color:inherit">
+        <div class="ig-card-header">
+          <div class="ig-card-user">
+            <div class="ig-card-avatar"><div class="ig-card-avatar-inner">a</div></div>
+            <div><div class="ig-card-username">aguije.py</div><div class="ig-card-time">2 sem</div></div>
+          </div>
+          <span class="ig-card-dots">···</span>
+        </div>
+        <img src="images/foto3.jpg" alt="Iced Latte" class="ig-card-img">
+        <div class="ig-card-actions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <svg class="ig-card-save" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="ig-card-body">
+          <div class="ig-card-likes">274 Me gusta</div>
+          <div class="ig-card-caption"><strong>aguije.py</strong> Iced latte para los días de calor 🧊 Refrescate en Aguije, te esperamos.</div>
+          <div class="ig-card-hashtags">#IcedLatte #CafeFrio #AguijePY</div>
+          <div class="ig-card-comments">Ver los 14 comentarios</div>
+        </div>
+      </a>
+
+      <a href="https://www.instagram.com/aguije.py/" target="_blank" rel="noopener" class="ig-card" style="text-decoration:none;color:inherit">
+        <div class="ig-card-header">
+          <div class="ig-card-user">
+            <div class="ig-card-avatar"><div class="ig-card-avatar-inner">a</div></div>
+            <div><div class="ig-card-username">aguije.py</div><div class="ig-card-time">2 sem</div></div>
+          </div>
+          <span class="ig-card-dots">···</span>
+        </div>
+        <img src="images/foto7.jpg" alt="Brunch spread" class="ig-card-img">
+        <div class="ig-card-actions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <svg class="ig-card-save" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="ig-card-body">
+          <div class="ig-card-likes">445 Me gusta</div>
+          <div class="ig-card-caption"><strong>aguije.py</strong> El brunch que tanto esperabas 🍳 Sábados y domingos de 9 a 15 hs. ¡Te esperamos!</div>
+          <div class="ig-card-hashtags">#Brunch #FinDeSemana #AsuncionPY</div>
+          <div class="ig-card-comments">Ver los 29 comentarios</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── WAVE ── -->
+<div class="wave" style="background: #fafafa;">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60">
+    <path d="M0,40 C360,0 720,60 1080,20 C1260,5 1380,50 1440,30 L1440,60 L0,60 Z" fill="#FDF0D8"/>
+  </svg>
+</div>
+
+<!-- ── DONDE ENCONTRARNOS ── -->
+<section id="donde">
+  <div class="donde-inner">
+    <div class="donde-info">
+      <span class="section-label">vení a vernos</span>
+      <h2 class="section-title">dónde<br>encontrarnos</h2>
+
+      <div class="donde-detail">
+        <div class="donde-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="donde-detail-text">
+          <h4>Dirección</h4>
+          <a href="https://maps.app.goo.gl/GfWE3yTym6sFru3EA" target="_blank" rel="noopener">
+            Asunción, Paraguay<br>Ver en Google Maps →
+          </a>
+        </div>
+      </div>
+
+      <div class="donde-detail">
+        <div class="donde-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="donde-detail-text">
+          <h4>Horarios</h4>
+          <p>Lunes a Viernes — desde las 8:00 hs<br>
+          Sábados y Domingos — Brunch 9 a 15 hs<br>
+          After Office — Jue a Dom desde 18:30 hs</p>
+        </div>
+      </div>
+
+      <div class="donde-detail">
+        <div class="donde-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <div class="donde-detail-text">
+          <h4>Instagram</h4>
+          <a href="https://www.instagram.com/aguije.py/" target="_blank" rel="noopener">@aguije.py</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="donde-map">
+      <iframe
+        src="https://maps.google.com/maps?q=aguije+cafe+asuncion+paraguay&output=embed&z=16"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación Aguije Cafetería">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ── WAVE ── -->
+<div class="wave" style="background: var(--crema-light);">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60">
+    <path d="M0,30 C360,60 720,0 1080,40 C1260,55 1380,20 1440,30 L1440,60 L0,60 Z" fill="#3D2010"/>
+  </svg>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">aguije</div>
+        <div class="footer-brand-tagline">gracias en guaraní</div>
+        <div class="footer-social">
+          <a href="https://instagram.com/aguije.cafe" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            @aguije.cafe
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Horarios</h4>
+        <ul>
+          <li><strong>Lunes a Viernes</strong>desde las 8:00 hs</li>
+          <li><strong>Sábados y Domingos</strong>Brunch 9 a 15 hs</li>
+          <li><strong>After Office</strong>Jue a Dom desde 18:30 hs</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li>Asunción, Paraguay</li>
+          <li>Esta carta está viva —<br>cambia con las estaciones</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Aguije Cafetería · est. 2025</span>
+      <span>Hecho con gratitud en Asunción</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Nav shadow on scroll ──
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // ── Tab switching ──
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ── Mobile menu ──
+  const burger = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const closeMenu = document.getElementById('closeMenu');
+  burger.addEventListener('click', () => mobileMenu.classList.add('open'));
+  closeMenu.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // ── Instagram infinite loop: duplicate cards ──
+  (function () {
+    const feed = document.querySelector('.ig-feed');
+    if (!feed) return;
+    const cards = Array.from(feed.querySelectorAll('.ig-card'));
+    cards.forEach(card => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      feed.appendChild(clone);
+    });
+  })();
+
+  // ── Hero Carousel ──
+  (function () {
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dotsContainer = document.getElementById('carouselDots');
+    const progress = document.getElementById('carouselProgress');
+    const INTERVAL = 5000;
+    let current = 0;
+    let timer = null;
+    let progressTimer = null;
+
+    // Build dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    });
+
+    function getDots() { return dotsContainer.querySelectorAll('.carousel-dot'); }
+
+    function goTo(index) {
+      slides[current].classList.remove('active');
+      getDots()[current].classList.remove('active');
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      getDots()[current].classList.add('active');
+      resetProgress();
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function startAuto() {
+      clearInterval(timer);
+      timer = setInterval(next, INTERVAL);
+    }
+
+    function resetProgress() {
+      clearTimeout(progressTimer);
+      progress.style.transition = 'none';
+      progress.style.width = '0%';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          progress.style.transition = `width ${INTERVAL}ms linear`;
+          progress.style.width = '100%';
+        });
+      });
+    }
+
+    document.getElementById('carouselNext').addEventListener('click', () => { next(); startAuto(); });
+    document.getElementById('carouselPrev').addEventListener('click', () => { prev(); startAuto(); });
+
+    // Swipe support
+    let touchStartX = 0;
+    const carousel = document.getElementById('heroCarousel');
+    carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) { diff > 0 ? next() : prev(); startAuto(); }
+    });
+
+    // Init
+    startAuto();
+    resetProgress();
+  })();
+</script>
+</body>
+</html>
