@@ -2512,17 +2512,21 @@
     heroBtnLang = heroBtnLang === 'es' ? 'en' : 'es';
     const labels = heroBtnLabels[heroBtnLang];
     heroBtnMenu.style.opacity = '0';
+    heroBtnMenu.style.transform = 'translateY(6px)';
     heroBtnReservar.style.opacity = '0';
+    heroBtnReservar.style.transform = 'translateY(6px)';
     setTimeout(() => {
       heroBtnMenu.textContent = labels.menu;
       heroBtnReservar.textContent = labels.reservar;
       heroBtnMenu.style.opacity = '1';
+      heroBtnMenu.style.transform = 'translateY(0)';
       heroBtnReservar.style.opacity = '1';
-    }, 200);
-  }, 2000);
+      heroBtnReservar.style.transform = 'translateY(0)';
+    }, 600);
+  }, 3500);
 
-  heroBtnMenu.style.transition = 'opacity 0.2s ease, background 0.3s, transform 0.3s, box-shadow 0.3s';
-  heroBtnReservar.style.transition = 'opacity 0.2s ease, background 0.3s, transform 0.3s, box-shadow 0.3s, border-color 0.3s';
+  heroBtnMenu.style.transition = 'opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.6s cubic-bezier(0.4,0,0.2,1), background 0.3s, box-shadow 0.3s';
+  heroBtnReservar.style.transition = 'opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.6s cubic-bezier(0.4,0,0.2,1), background 0.3s, box-shadow 0.3s, border-color 0.3s';
 </script>
 </body>
 </html>
